@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Gallery · 风格与动效索引</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+    background: #0a0a0a;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+  .container {
+    max-width: 900px;
+    width: 100%;
+  }
+  h1 {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #fff 0%, #888 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .subtitle {
+    color: #888;
+    font-size: 16px;
+    margin-bottom: 60px;
+    line-height: 1.6;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .card {
+    background: linear-gradient(135deg, #1a1a1a 0%, #222 100%);
+    border: 1px solid #2a2a2a;
+    border-radius: 20px;
+    padding: 40px 32px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: #444;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .card:hover::before {
+    opacity: 1;
+  }
+  .card .num {
+    font-size: 13px;
+    color: #666;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .card .title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 4px;
+  }
+  .card .desc {
+    color: #999;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .card .count {
+    color: #666;
+    font-size: 13px;
+    margin-top: 12px;
+  }
+  .card .arrow {
+    position: absolute;
+    right: 32px;
+    bottom: 32px;
+    font-size: 24px;
+    color: #444;
+    transition: transform 0.3s, color 0.3s;
+  }
+  .card:hover .arrow {
+    color: #fff;
+    transform: translateX(6px);
+  }
+  .footer {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid #222;
+    color: #555;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  .footer code {
+    background: #1a1a1a;
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: #aaa;
+    font-family: "SF Mono", Consolas, monospace;
+  }
+  @media (max-width: 640px) {
+    .cards { grid-template-columns: 1fr; }
+    h1 { font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎨 Gallery</h1>
+    <p class="subtitle">
+      风格与动效的可视化字典。<br>
+      看中哪个，告诉我编号即可，例如「用 S07 的风格 + M12 的动效」。
+    </p>
+
+    <div class="cards">
+      <a href="styles.html" class="card">
+        <span class="num">Styles / 视觉风格</span>
+        <div class="title">35 种风格</div>
+        <div class="desc">配色 · 字体 · 卡片 · 按钮 · 标题的完整组合，每种编号 S01–S35。</div>
+        <div class="count">从极简到赛博朋克，从 Neumorphism 到 Tapd style</div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="motion.html" class="card">
+        <span class="num">Motion / 交互动效</span>
+        <div class="title">20 种动效</div>
+        <div class="desc">悬浮 · 加载 · 转场 · 微交互，每种编号 M01–M20，可点击触发。</div>
+        <div class="count">从优雅淡入到弹性缩放，涵盖常用交互场景</div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="ai-product-knowledge-graph.html" class="card">
+        <span class="num">Example / AI 产品图谱</span>
+        <div class="title">S05 实战页</div>
+        <div class="desc">用赛博朋克风格呈现 AI 产品应该学习的知识结构。</div>
+        <div class="count">用户价值 · 模型能力 · 数据 RAG · 评估安全 · 商业闭环</div>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+
+    <div class="footer">
+      使用方式：告诉我 <code>Sxx</code> + <code>Mxx</code> 编号，我就能精准复现该风格与动效。<br>
+      例如：「做一个登录页，用 S12 极简风 + M08 淡入动效」。
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Product Knowledge Graph · S05</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg: #070216;
+    --panel: rgba(15, 5, 36, 0.86);
+    --panel-strong: rgba(26, 9, 56, 0.96);
+    --cyan: #00fff0;
+    --cyan-soft: rgba(0, 255, 240, 0.18);
+    --magenta: #ff00c8;
+    --magenta-soft: rgba(255, 0, 200, 0.18);
+    --violet: #7c3aed;
+    --text: #e9e6ff;
+    --muted: #9489b8;
+    --line: rgba(0, 255, 240, 0.28);
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    background:
+      linear-gradient(rgba(0,255,240,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,0,200,0.035) 1px, transparent 1px),
+      radial-gradient(circle at 18% 16%, rgba(255,0,200,0.22), transparent 32%),
+      radial-gradient(circle at 84% 20%, rgba(0,255,240,0.16), transparent 30%),
+      linear-gradient(135deg, #0f0524, #05010f 56%, #1a0938);
+    background-size: 34px 34px, 34px 34px, auto, auto, auto;
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 7px,
+      rgba(255, 255, 255, 0.028) 8px
+    );
+    mix-blend-mode: screen;
+  }
+
+  a { color: inherit; }
+  button { font: inherit; }
+
+  .shell {
+    width: min(1440px, 100%);
+    margin: 0 auto;
+    padding: 28px 24px 56px;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 42px;
+  }
+
+  .back {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .style-badge {
+    border: 1px solid var(--magenta);
+    background: var(--magenta);
+    color: #05010f;
+    box-shadow: 0 0 18px var(--magenta-soft);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    padding: 8px 12px;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
+    gap: 28px;
+    align-items: stretch;
+    margin-bottom: 28px;
+  }
+
+  .intro {
+    position: relative;
+    border: 1px solid var(--magenta);
+    background: linear-gradient(135deg, rgba(15, 5, 36, 0.9), rgba(26, 9, 56, 0.72));
+    box-shadow: inset 0 0 42px rgba(255, 0, 200, 0.18), 0 0 34px rgba(0, 255, 240, 0.08);
+    padding: 34px;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+
+  .intro::after,
+  .graph-panel::after {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border: 1px solid rgba(0, 255, 240, 0.12);
+    pointer-events: none;
+  }
+
+  .kicker {
+    color: var(--cyan);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px var(--cyan);
+    margin-bottom: 18px;
+  }
+
+  h1 {
+    max-width: 720px;
+    color: var(--cyan);
+    font-size: clamp(40px, 6vw, 76px);
+    line-height: 0.94;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-shadow: 0 0 16px rgba(0, 255, 240, 0.82);
+  }
+
+  .intro-text {
+    max-width: 620px;
+    color: #c7c0ef;
+    margin-top: 24px;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  .quick-read {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 34px;
+  }
+
+  .metric {
+    border: 1px solid rgba(0, 255, 240, 0.24);
+    background: rgba(0, 255, 240, 0.06);
+    padding: 14px;
+  }
+
+  .metric strong {
+    display: block;
+    color: var(--cyan);
+    font-size: 25px;
+    text-shadow: 0 0 9px rgba(0, 255, 240, 0.74);
+  }
+
+  .metric span {
+    display: block;
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .graph-panel {
+    position: relative;
+    min-height: 500px;
+    border: 1px solid var(--line);
+    background: radial-gradient(circle at center, rgba(0,255,240,0.1), transparent 46%), rgba(7, 2, 22, 0.7);
+    box-shadow: inset 0 0 46px rgba(0, 255, 240, 0.09), 0 0 28px rgba(255, 0, 200, 0.08);
+    overflow: hidden;
+  }
+
+  .graph {
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+  }
+
+  .edge {
+    stroke: rgba(0, 255, 240, 0.46);
+    stroke-width: 1.3;
+    filter: drop-shadow(0 0 4px rgba(0,255,240,0.82));
+  }
+
+  .edge.secondary {
+    stroke: rgba(255, 0, 200, 0.34);
+    stroke-dasharray: 5 7;
+  }
+
+  .node circle,
+  .node rect {
+    fill: rgba(15, 5, 36, 0.96);
+    stroke: var(--cyan);
+    stroke-width: 1.6;
+    filter: drop-shadow(0 0 8px rgba(0, 255, 240, 0.8));
+  }
+
+  .node.core circle {
+    fill: rgba(255, 0, 200, 0.13);
+    stroke: var(--magenta);
+    stroke-width: 2.2;
+    filter: drop-shadow(0 0 12px rgba(255, 0, 200, 0.88));
+  }
+
+  .node text {
+    fill: var(--text);
+    font-size: 12px;
+    font-weight: 700;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    pointer-events: none;
+  }
+
+  .node .code {
+    fill: var(--cyan);
+    font-size: 10px;
+    letter-spacing: 1.4px;
+  }
+
+  .section-title {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 26px 0 14px;
+  }
+
+  .section-title h2 {
+    color: var(--cyan);
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 1.4px;
+    text-shadow: 0 0 10px rgba(0, 255, 240, 0.66);
+  }
+
+  .section-title p {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .domains {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .domain-card {
+    position: relative;
+    min-height: 228px;
+    border: 1px solid rgba(255, 0, 200, 0.46);
+    background: linear-gradient(145deg, rgba(26, 9, 56, 0.92), rgba(5, 1, 15, 0.92));
+    box-shadow: inset 0 0 24px rgba(255, 0, 200, 0.12);
+    padding: 18px;
+    overflow: hidden;
+  }
+
+  .domain-card::before {
+    content: attr(data-code);
+    position: absolute;
+    right: 14px;
+    top: 12px;
+    color: rgba(0,255,240,0.22);
+    font-size: 38px;
+    font-weight: 900;
+  }
+
+  .domain-card h3 {
+    position: relative;
+    color: var(--cyan);
+    font-size: 17px;
+    margin-bottom: 12px;
+    text-shadow: 0 0 8px rgba(0,255,240,0.54);
+  }
+
+  .domain-card ul {
+    position: relative;
+    list-style: none;
+    display: grid;
+    gap: 9px;
+    color: #cfc8ff;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .domain-card li {
+    display: grid;
+    grid-template-columns: 12px 1fr;
+    gap: 8px;
+  }
+
+  .domain-card li::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    margin-top: 6px;
+    background: var(--magenta);
+    box-shadow: 0 0 9px var(--magenta);
+  }
+
+  .path {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    border: 1px solid var(--line);
+    background: var(--line);
+  }
+
+  .path-step {
+    background: rgba(7, 2, 22, 0.94);
+    padding: 18px;
+    min-height: 142px;
+  }
+
+  .path-step span {
+    color: var(--magenta);
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 2px;
+  }
+
+  .path-step strong {
+    display: block;
+    color: var(--cyan);
+    margin: 10px 0 8px;
+    font-size: 17px;
+  }
+
+  .path-step p {
+    color: #b7afd9;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .signal {
+    margin-top: 24px;
+    border: 1px solid var(--magenta);
+    background: rgba(255, 0, 200, 0.08);
+    color: #e9e6ff;
+    padding: 18px;
+    box-shadow: inset 0 0 22px rgba(255, 0, 200, 0.12);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 1120px) {
+    .hero { grid-template-columns: 1fr; }
+    .intro { min-height: auto; }
+    .domains { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 720px) {
+    .shell { padding: 22px 14px 44px; }
+    .nav { margin-bottom: 28px; }
+    .intro { padding: 24px; }
+    .quick-read,
+    .domains,
+    .path { grid-template-columns: 1fr; }
+    .section-title { display: block; }
+    .section-title p { margin-top: 8px; }
+    .graph,
+    .graph-panel { min-height: 620px; }
+  }
+</style>
+</head>
+<body>
+  <main class="shell">
+    <nav class="nav">
+      <a class="back" href="index.html">← Gallery Index</a>
+      <span class="style-badge">S05 CYBERPUNK</span>
+    </nav>
+
+    <section class="hero">
+      <div class="intro">
+        <div>
+          <p class="kicker">AI Product Learning Matrix</p>
+          <h1>AI 产品知识图谱</h1>
+          <p class="intro-text">
+            一个 AI 产品应该学习的不是单点技术，而是把用户问题、模型能力、数据系统、评估、安全、工程交付和商业闭环串起来。中心能力是：把不确定的智能能力，变成可被用户信任、可被业务衡量、可持续迭代的产品体验。
+          </p>
+          <div class="quick-read" aria-label="学习地图概览">
+            <div class="metric"><strong>11</strong><span>核心知识域</span></div>
+            <div class="metric"><strong>4</strong><span>学习阶段</span></div>
+            <div class="metric"><strong>1</strong><span>最终目标：可验证价值</span></div>
+          </div>
+        </div>
+        <div class="signal">
+          读图方式：先从中心的 AI 产品能力出发，向外学习“用户价值”和“模型能力”两条主线，再补齐 RAG、评估、安全与工程化。能把这些节点连起来的人，才真正能定义、落地、迭代一个 AI 产品。
+        </div>
+      </div>
+
+      <section class="graph-panel" aria-label="AI 产品知识图谱">
+        <svg class="graph" viewBox="0 0 760 560" role="img" aria-labelledby="graphTitle graphDesc">
+          <title id="graphTitle">AI 产品知识图谱</title>
+          <desc id="graphDesc">中心节点连接用户问题、模型基础、交互设计、数据系统、评估安全、工程交付和商业增长等知识域。</desc>
+          <line class="edge" x1="380" y1="280" x2="380" y2="86"></line>
+          <line class="edge" x1="380" y1="280" x2="574" y2="128"></line>
+          <line class="edge" x1="380" y1="280" x2="650" y2="290"></line>
+          <line class="edge" x1="380" y1="280" x2="568" y2="440"></line>
+          <line class="edge" x1="380" y1="280" x2="380" y2="488"></line>
+          <line class="edge" x1="380" y1="280" x2="190" y2="440"></line>
+          <line class="edge" x1="380" y1="280" x2="110" y2="290"></line>
+          <line class="edge" x1="380" y1="280" x2="188" y2="128"></line>
+          <line class="edge secondary" x1="188" y1="128" x2="380" y2="86"></line>
+          <line class="edge secondary" x1="574" y1="128" x2="650" y2="290"></line>
+          <line class="edge secondary" x1="650" y1="290" x2="568" y2="440"></line>
+          <line class="edge secondary" x1="190" y1="440" x2="380" y2="488"></line>
+          <line class="edge secondary" x1="110" y1="290" x2="188" y2="128"></line>
+
+          <g class="node core" transform="translate(380 280)">
+            <circle r="76"></circle>
+            <text y="-12">AI 产品能力</text>
+            <text class="code" y="14">VALUE × MODEL × SYSTEM</text>
+          </g>
+
+          <g class="node" transform="translate(380 86)">
+            <rect x="-78" y="-34" width="156" height="68" rx="4"></rect>
+            <text y="-8">用户与场景</text>
+            <text class="code" y="15">JOB / PAIN / TRUST</text>
+          </g>
+          <g class="node" transform="translate(574 128)">
+            <rect x="-82" y="-34" width="164" height="68" rx="4"></rect>
+            <text y="-8">模型基础</text>
+            <text class="code" y="15">LLM / MULTIMODAL</text>
+          </g>
+          <g class="node" transform="translate(650 290)">
+            <rect x="-80" y="-34" width="160" height="68" rx="4"></rect>
+            <text y="-8">数据与 RAG</text>
+            <text class="code" y="15">INDEX / RETRIEVE</text>
+          </g>
+          <g class="node" transform="translate(568 440)">
+            <rect x="-82" y="-34" width="164" height="68" rx="4"></rect>
+            <text y="-8">评估与安全</text>
+            <text class="code" y="15">EVAL / GUARDRAIL</text>
+          </g>
+          <g class="node" transform="translate(380 488)">
+            <rect x="-78" y="-34" width="156" height="68" rx="4"></rect>
+            <text y="-8">工程交付</text>
+            <text class="code" y="15">API / OPS / COST</text>
+          </g>
+          <g class="node" transform="translate(190 440)">
+            <rect x="-82" y="-34" width="164" height="68" rx="4"></rect>
+            <text y="-8">产品体验</text>
+            <text class="code" y="15">UX / COPILOT / AGENT</text>
+          </g>
+          <g class="node" transform="translate(110 290)">
+            <rect x="-78" y="-34" width="156" height="68" rx="4"></rect>
+            <text y="-8">商业闭环</text>
+            <text class="code" y="15">GTM / METRIC</text>
+          </g>
+          <g class="node" transform="translate(188 128)">
+            <rect x="-82" y="-34" width="164" height="68" rx="4"></rect>
+            <text y="-8">提示与工作流</text>
+            <text class="code" y="15">PROMPT / TOOL</text>
+          </g>
+        </svg>
+      </section>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>知识域</h2>
+        <p>每个模块都要能落到产品决策，而不是只停在概念层。</p>
+      </div>
+      <div class="domains">
+        <article class="domain-card" data-code="01">
+          <h3>用户问题与价值定义</h3>
+          <ul>
+            <li>识别高频、复杂、信息密集的任务</li>
+            <li>拆解用户目标、约束、容错边界</li>
+            <li>定义 AI 比传统软件更好的理由</li>
+          </ul>
+        </article>
+        <article class="domain-card" data-code="02">
+          <h3>模型与能力边界</h3>
+          <ul>
+            <li>理解 LLM、多模态、Embedding、工具调用</li>
+            <li>知道幻觉、上下文窗口、延迟和成本限制</li>
+            <li>选择自研、开源、API 或混合路线</li>
+          </ul>
+        </article>
+        <article class="domain-card" data-code="03">
+          <h3>Prompt 与交互协议</h3>
+          <ul>
+            <li>设计系统提示、用户输入和输出格式</li>
+            <li>把复杂任务拆成可控步骤和状态</li>
+            <li>沉淀可复用的任务模板与工作流</li>
+          </ul>
+        </article>
+        <article class="domain-card" data-code="04">
+          <h3>数据、知识库与 RAG</h3>
+          <ul>
+            <li>理解数据清洗、切分、索引、召回和重排</li>
+            <li>设计引用来源、权限和数据更新机制</li>
+            <li>判断什么时候需要微调或知识工程</li>
+          </ul>
+        </article>
+        <article class="domain-card" data-code="05">
+          <h3>AI UX 与信任设计</h3>
+          <ul>
+            <li>设计输入建议、追问、草稿、可编辑结果</li>
+            <li>展示置信度、来源、过程和可撤销操作</li>
+            <li>让用户从“等待答案”转为“协同决策”</li>
+          </ul>
+        </article>
+        <article class="domain-card" data-code="06">
+          <h3>评估体系</h3>
+          <ul>
+            <li>建立离线测试集、人工评审和线上反馈</li>
+            <li>衡量准确性、可用性、完成率、节省时间</li>
+            <li>跟踪回归、边界样本和失败类型</li>
+          </ul>
+        </article>
+        <article class="domain-card" data-code="07">
+          <h3>安全、合规与治理</h3>
+          <ul>
+            <li>处理隐私、版权、越权访问和敏感内容</li>
+            <li>设计审计日志、权限边界和人工兜底</li>
+            <li>明确哪些场景不能让 AI 自动执行</li>
+          </ul>
+        </article>
+        <article class="domain-card" data-code="08">
+          <h3>工程化与成本</h3>
+          <ul>
+            <li>理解 API、Agent、队列、缓存和观测</li>
+            <li>优化延迟、token 成本、稳定性和降级策略</li>
+            <li>把实验能力变成可维护的生产系统</li>
+          </ul>
+        </article>
+        <article class="domain-card" data-code="09">
+          <h3>Agent 与工具生态</h3>
+          <ul>
+            <li>区分 Copilot、Autopilot、Agent 的边界</li>
+            <li>设计工具权限、计划执行和中断恢复</li>
+            <li>让 AI 调用系统能力，而不只是生成文本</li>
+          </ul>
+        </article>
+        <article class="domain-card" data-code="10">
+          <h3>商业化与增长</h3>
+          <ul>
+            <li>定义付费价值、使用频次和留存场景</li>
+            <li>设计按席位、按量、增值包等计费方式</li>
+            <li>用真实业务指标验证 AI 的 ROI</li>
+          </ul>
+        </article>
+        <article class="domain-card" data-code="11">
+          <h3>组织协作</h3>
+          <ul>
+            <li>连接产品、算法、工程、法务和运营</li>
+            <li>建立 Prompt、数据、评估、发布的协作规范</li>
+            <li>让团队围绕样例和指标沟通，而不是玄学争论</li>
+          </ul>
+        </article>
+        <article class="domain-card" data-code="12">
+          <h3>持续迭代</h3>
+          <ul>
+            <li>收集用户修正、失败案例和高价值路径</li>
+            <li>把反馈转成数据、评估和产品改版</li>
+            <li>持续比较模型、架构和体验方案</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h2>学习路径</h2>
+        <p>从能判断场景，到能上线系统，再到能衡量增长。</p>
+      </div>
+      <div class="path">
+        <div class="path-step">
+          <span>PHASE 01</span>
+          <strong>看懂任务</strong>
+          <p>先学用户研究、流程拆解、价值判断，找到 AI 适合解决的高杠杆任务。</p>
+        </div>
+        <div class="path-step">
+          <span>PHASE 02</span>
+          <strong>看懂模型</strong>
+          <p>掌握 LLM、RAG、Prompt、工具调用和能力边界，知道方案为什么会失败。</p>
+        </div>
+        <div class="path-step">
+          <span>PHASE 03</span>
+          <strong>看懂系统</strong>
+          <p>补齐工程、成本、观测、安全、权限和评估，把 Demo 变成可靠产品。</p>
+        </div>
+        <div class="path-step">
+          <span>PHASE 04</span>
+          <strong>看懂业务</strong>
+          <p>用留存、完成率、节省时间、付费转化和 ROI 判断 AI 产品是否真的成立。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

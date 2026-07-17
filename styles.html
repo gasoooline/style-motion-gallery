@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Styles Gallery · 35 种视觉风格</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+    background: #0f0f0f;
+    color: #fff;
+    padding: 40px 20px 80px;
+  }
+  .page-header {
+    max-width: 1200px;
+    margin: 0 auto 60px;
+    text-align: center;
+  }
+  .page-header a {
+    color: #888;
+    text-decoration: none;
+    font-size: 13px;
+  }
+  .page-header a:hover { color: #fff; }
+  .page-header h1 {
+    font-size: 42px;
+    margin: 12px 0 8px;
+    background: linear-gradient(135deg, #fff, #666);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .page-header p { color: #888; font-size: 14px; }
+
+  .grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 24px;
+  }
+
+  .style-card {
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    justify-content: space-between;
+    transition: transform 0.3s;
+  }
+  .style-card:hover { transform: translateY(-4px); }
+  .style-card .badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+  .style-card .meta {
+    margin-top: auto;
+    padding-top: 16px;
+  }
+  .style-card .name { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .style-card .desc { font-size: 12px; opacity: 0.7; line-height: 1.5; }
+  .style-card .sample-title {
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .style-card .sample-text {
+    font-size: 13px;
+    opacity: 0.75;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+  .style-card .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    align-self: flex-start;
+  }
+  .copy-prompt {
+    border: 1px solid rgba(255,255,255,0.28);
+    border-radius: 8px;
+    background: rgba(0,0,0,0.34);
+    color: #fff;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    min-height: 38px;
+    padding: 0 14px;
+    backdrop-filter: blur(10px);
+    transition: transform 0.2s, border-color 0.2s, background 0.2s;
+  }
+  .copy-prompt:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255,255,255,0.72);
+    background: rgba(0,0,0,0.5);
+  }
+  .copy-prompt.copied {
+    border-color: #00fff0;
+    color: #00fff0;
+    box-shadow: 0 0 14px rgba(0,255,240,0.35);
+  }
+  .copy-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 26px;
+    z-index: 10;
+    transform: translateX(-50%) translateY(18px);
+    opacity: 0;
+    pointer-events: none;
+    border: 1px solid #00fff0;
+    background: rgba(10,10,10,0.92);
+    color: #00fff0;
+    box-shadow: 0 0 22px rgba(0,255,240,0.3);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 11px 16px;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .copy-toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ============ 风格定义 S01-S35 ============ */
+
+  /* S01 极简黑白 */
+  .s01 { background: #fff; color: #000; }
+  .s01 .badge { background: #000; color: #fff; }
+  .s01 .btn { background: #000; color: #fff; border-radius: 0; }
+
+  /* S02 苹果柔和 */
+  .s02 { background: #f5f5f7; color: #1d1d1f; }
+  .s02 .badge { background: #1d1d1f; }
+  .s02 .btn { background: #0071e3; color: #fff; border-radius: 980px; padding: 12px 22px; }
+  .s02 .sample-title { font-weight: 600; }
+
+  /* S03 Glassmorphism 毛玻璃 */
+  .s03 {
+    background: linear-gradient(135deg, #ff6ec4, #7873f5);
+    position: relative;
+  }
+  .s03::before {
+    content: '';
+    position: absolute; inset: 16px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+  }
+  .s03 > * { position: relative; z-index: 1; }
+  .s03 .badge { background: rgba(255,255,255,0.25); }
+  .s03 .btn { background: rgba(255,255,255,0.25); color: #fff; border-radius: 12px; backdrop-filter: blur(10px); }
+
+  /* S04 Neumorphism 拟态 */
+  .s04 { background: #e0e5ec; color: #333; }
+  .s04 .badge { background: #333; color: #e0e5ec; }
+  .s04 .btn {
+    background: #e0e5ec; color: #333; border-radius: 12px;
+    box-shadow: 6px 6px 12px #a3b1c6, -6px -6px 12px #ffffff;
+  }
+  .s04 .sample-title { color: #333; }
+
+  /* S05 赛博朋克 */
+  .s05 {
+    background: linear-gradient(135deg, #0f0524, #1a0938);
+    color: #00fff0;
+    border: 1px solid #ff00c8;
+    box-shadow: inset 0 0 40px rgba(255,0,200,0.2);
+  }
+  .s05 .badge { background: #ff00c8; color: #000; }
+  .s05 .sample-title { color: #00fff0; text-shadow: 0 0 12px #00fff0; }
+  .s05 .btn {
+    background: transparent; color: #00fff0; border: 1px solid #00fff0;
+    text-shadow: 0 0 8px #00fff0; box-shadow: 0 0 16px rgba(0,255,240,0.4);
+  }
+
+  /* S06 复古报纸 */
+  .s06 { background: #f4ecd8; color: #2b2b2b; font-family: Georgia, serif; }
+  .s06 .badge { background: #2b2b2b; color: #f4ecd8; border-radius: 0; }
+  .s06 .btn { background: #2b2b2b; color: #f4ecd8; border-radius: 0; font-family: Georgia; }
+  .s06 .sample-title { font-family: Georgia; font-style: italic; border-bottom: 2px solid #2b2b2b; padding-bottom: 8px; }
+
+  /* S07 莫兰迪灰粉 */
+  .s07 { background: #d4c5c0; color: #4a3f3a; }
+  .s07 .badge { background: #a08578; }
+  .s07 .btn { background: #8b6f6a; color: #f5ebe6; border-radius: 8px; }
+
+  /* S08 深空紫 */
+  .s08 {
+    background: linear-gradient(135deg, #0a0524, #2a0e5a);
+    color: #e0d5ff;
+  }
+  .s08 .badge { background: #7c4dff; }
+  .s08 .btn { background: linear-gradient(135deg, #7c4dff, #b388ff); color: #fff; border-radius: 30px; }
+
+  /* S09 日式和风 */
+  .s09 { background: #f5f0e8; color: #3d2b1f; border: 1px solid #d4a574; }
+  .s09 .badge { background: #c73e3a; color: #f5f0e8; border-radius: 0; }
+  .s09 .btn { background: #c73e3a; color: #f5f0e8; border-radius: 0; }
+  .s09 .sample-title { font-weight: 300; letter-spacing: 4px; }
+
+  /* S10 孟菲斯 Memphis */
+  .s10 {
+    background: #fef3c7;
+    color: #1e1b4b;
+    background-image:
+      radial-gradient(circle at 20% 30%, #ec4899 0%, #ec4899 12px, transparent 13px),
+      radial-gradient(circle at 80% 70%, #06b6d4 0%, #06b6d4 15px, transparent 16px),
+      linear-gradient(45deg, transparent 40%, #a3e635 40%, #a3e635 45%, transparent 45%);
+  }
+  .s10 .badge { background: #1e1b4b; color: #fef3c7; }
+  .s10 .btn { background: #ec4899; color: #fff; border-radius: 0; border: 3px solid #1e1b4b; box-shadow: 4px 4px 0 #1e1b4b; }
+
+  /* S11 极暗黑金 */
+  .s11 { background: #0a0a0a; color: #d4af37; border: 1px solid #d4af37; }
+  .s11 .badge { background: #d4af37; color: #000; }
+  .s11 .btn { background: transparent; color: #d4af37; border: 1px solid #d4af37; letter-spacing: 2px; }
+  .s11 .sample-title { color: #d4af37; font-weight: 300; letter-spacing: 3px; }
+
+  /* S12 手绘涂鸦 */
+  .s12 { background: #fffbeb; color: #1f2937; border: 3px dashed #1f2937; border-radius: 24px; }
+  .s12 .badge { background: #1f2937; color: #fffbeb; border-radius: 20px; border: 2px dashed #fffbeb; }
+  .s12 .btn { background: #fbbf24; color: #1f2937; border: 3px solid #1f2937; border-radius: 24px; box-shadow: 4px 4px 0 #1f2937; }
+  .s12 .sample-title { font-family: "Comic Sans MS", cursive; }
+
+  /* S13 医疗清爽蓝 */
+  .s13 { background: #f0f9ff; color: #0c4a6e; border-left: 4px solid #0ea5e9; }
+  .s13 .badge { background: #0ea5e9; }
+  .s13 .btn { background: #0ea5e9; color: #fff; border-radius: 8px; }
+
+  /* S14 森林自然 */
+  .s14 { background: linear-gradient(135deg, #1a3a2a, #0f2818); color: #d4e8d4; }
+  .s14 .badge { background: #4ade80; color: #0f2818; }
+  .s14 .btn { background: #4ade80; color: #0f2818; border-radius: 24px; font-weight: 700; }
+
+  /* S15 高级灰奢华 */
+  .s15 { background: #2c2c2c; color: #d4d4d4; }
+  .s15 .badge { background: #d4d4d4; color: #2c2c2c; }
+  .s15 .btn { background: transparent; color: #d4d4d4; border: 1px solid #666; letter-spacing: 3px; text-transform: uppercase; }
+  .s15 .sample-title { font-weight: 200; letter-spacing: 2px; }
+
+  /* S16 糖果甜品 */
+  .s16 { background: linear-gradient(135deg, #ffd1dc, #ffe5b4); color: #4a2c4a; }
+  .s16 .badge { background: #ff6b9d; color: #fff; }
+  .s16 .btn { background: #ff6b9d; color: #fff; border-radius: 30px; box-shadow: 0 4px 12px rgba(255,107,157,0.4); }
+
+  /* S17 极客终端 */
+  .s17 { background: #000; color: #00ff00; font-family: "SF Mono", "Consolas", monospace; }
+  .s17 .badge { background: #00ff00; color: #000; border-radius: 0; }
+  .s17 .btn { background: transparent; color: #00ff00; border: 1px solid #00ff00; border-radius: 0; }
+  .s17 .sample-title { font-family: "SF Mono", monospace; }
+  .s17 .sample-title::before { content: '> '; }
+
+  /* S18 水彩渐变 */
+  .s18 {
+    background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 50%, #84fab0 100%);
+    color: #1e293b;
+  }
+  .s18 .badge { background: rgba(255,255,255,0.5); color: #1e293b; backdrop-filter: blur(10px); }
+  .s18 .btn { background: #fff; color: #1e293b; border-radius: 30px; }
+
+  /* S19 工业风金属 */
+  .s19 {
+    background: linear-gradient(135deg, #3a3a3a, #1a1a1a);
+    color: #ff6b35;
+    border: 2px solid #666;
+  }
+  .s19 .badge { background: #ff6b35; color: #000; border-radius: 0; }
+  .s19 .btn { background: #ff6b35; color: #000; border-radius: 0; font-weight: 800; text-transform: uppercase; }
+
+  /* S20 中国风水墨 */
+  .s20 { background: #f5f2ea; color: #1a1a1a; border: 1px solid #8b7355; }
+  .s20 .badge { background: #8b0000; color: #f5f2ea; border-radius: 0; }
+  .s20 .btn { background: transparent; color: #1a1a1a; border: 1px solid #1a1a1a; border-radius: 0; }
+  .s20 .sample-title { font-family: "STKaiti", "KaiTi", serif; font-weight: 400; letter-spacing: 3px; }
+
+  /* S21 Y2K 千禧 */
+  .s21 {
+    background: linear-gradient(135deg, #c0c0c0, #e8e8e8);
+    color: #ff1493;
+    border: 3px solid #ff1493;
+  }
+  .s21 .badge { background: linear-gradient(135deg, #ff1493, #00ced1); color: #fff; border-radius: 0; }
+  .s21 .btn {
+    background: linear-gradient(135deg, #00ced1, #ff1493); color: #fff;
+    border-radius: 20px; text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+  }
+  .s21 .sample-title { color: #ff1493; text-shadow: 2px 2px 0 #00ced1; }
+
+  /* S22 极简白瓷 */
+  .s22 { background: #fafafa; color: #333; box-shadow: inset 0 0 0 1px #e5e5e5; }
+  .s22 .badge { background: #333; }
+  .s22 .btn { background: #333; color: #fff; border-radius: 2px; }
+  .s22 .sample-title { font-weight: 300; }
+
+  /* S23 咖啡拿铁 */
+  .s23 { background: #e6d5b8; color: #4a3728; }
+  .s23 .badge { background: #4a3728; color: #e6d5b8; }
+  .s23 .btn { background: #6f4e37; color: #f5deb3; border-radius: 20px; }
+
+  /* S24 电竞霓虹 */
+  .s24 {
+    background: #050014;
+    color: #fff;
+    border: 1px solid #7c3aed;
+    box-shadow: 0 0 30px rgba(124,58,237,0.4), inset 0 0 30px rgba(124,58,237,0.2);
+  }
+  .s24 .badge { background: #7c3aed; }
+  .s24 .btn {
+    background: linear-gradient(135deg, #7c3aed, #ec4899); color: #fff;
+    border-radius: 4px; text-transform: uppercase; letter-spacing: 2px;
+    box-shadow: 0 0 20px rgba(236,72,153,0.5);
+  }
+  .s24 .sample-title { text-shadow: 0 0 20px #7c3aed; }
+
+  /* S25 儿童卡通 */
+  .s25 { background: #fef9c3; color: #1e40af; border: 4px solid #1e40af; border-radius: 24px; }
+  .s25 .badge { background: #ef4444; color: #fff; border: 3px solid #1e40af; }
+  .s25 .btn { background: #ef4444; color: #fff; border-radius: 20px; border: 3px solid #1e40af; font-weight: 800; box-shadow: 4px 4px 0 #1e40af; }
+  .s25 .sample-title { font-weight: 900; }
+
+  /* S26 高冷时尚黑 */
+  .s26 { background: #000; color: #fff; }
+  .s26 .badge { background: #fff; color: #000; border-radius: 0; }
+  .s26 .btn { background: #fff; color: #000; border-radius: 0; text-transform: uppercase; letter-spacing: 4px; font-weight: 700; }
+  .s26 .sample-title { font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
+
+  /* S27 大自然清晨 */
+  .s27 { background: linear-gradient(180deg, #ffecd2 0%, #fcb69f 100%); color: #7c2d12; }
+  .s27 .badge { background: #7c2d12; color: #ffecd2; }
+  .s27 .btn { background: #ea580c; color: #fff; border-radius: 30px; }
+
+  /* S28 极简线框 Wireframe */
+  .s28 { background: #fff; color: #000; border: 2px solid #000; }
+  .s28 .badge { background: #fff; color: #000; border: 1px solid #000; border-radius: 0; }
+  .s28 .btn { background: #fff; color: #000; border: 2px solid #000; border-radius: 0; }
+  .s28 .sample-title { border-bottom: 2px solid #000; padding-bottom: 8px; }
+
+  /* S29 珊瑚粉活力 */
+  .s29 { background: #ff7f6b; color: #fff; }
+  .s29 .badge { background: #fff; color: #ff7f6b; }
+  .s29 .btn { background: #fff; color: #ff7f6b; border-radius: 30px; font-weight: 700; }
+
+  /* S30 星空梦幻 */
+  .s30 {
+    background:
+      radial-gradient(2px 2px at 20% 30%, #fff, transparent),
+      radial-gradient(2px 2px at 60% 70%, #fff, transparent),
+      radial-gradient(1px 1px at 80% 40%, #fff, transparent),
+      radial-gradient(1px 1px at 40% 80%, #fff, transparent),
+      linear-gradient(135deg, #0f0524, #1a0938);
+    color: #fff;
+  }
+  .s30 .badge { background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); }
+  .s30 .btn { background: linear-gradient(135deg, #a78bfa, #ec4899); color: #fff; border-radius: 30px; }
+
+  /* S31 灰调冷淡 */
+  .s31 { background: #e5e7eb; color: #374151; }
+  .s31 .badge { background: #374151; }
+  .s31 .btn { background: #6b7280; color: #fff; border-radius: 6px; }
+  .s31 .sample-title { font-weight: 500; }
+
+  /* S32 立体 3D 卡通 */
+  .s32 {
+    background: linear-gradient(135deg, #a78bfa, #7c3aed);
+    color: #fff;
+    box-shadow: 0 12px 0 #5b21b6, 0 20px 40px rgba(124,58,237,0.4);
+  }
+  .s32 .badge { background: #fff; color: #7c3aed; }
+  .s32 .btn {
+    background: #fff; color: #7c3aed; border-radius: 30px;
+    box-shadow: 0 6px 0 #e5e7eb; font-weight: 800;
+  }
+
+  /* S33 极简杂志 */
+  .s33 { background: #fff; color: #000; font-family: "Times New Roman", serif; border-top: 6px solid #000; }
+  .s33 .badge { background: #000; color: #fff; border-radius: 0; font-family: sans-serif; }
+  .s33 .btn { background: transparent; color: #000; border-bottom: 2px solid #000; border-radius: 0; padding: 4px 0; }
+  .s33 .sample-title { font-family: "Times New Roman"; font-weight: 700; font-size: 32px; line-height: 1; }
+
+  /* S34 未来科技蓝 */
+  .s34 {
+    background: linear-gradient(135deg, #001233, #0353a4);
+    color: #48cae4;
+    border: 1px solid #48cae4;
+  }
+  .s34 .badge { background: #48cae4; color: #001233; }
+  .s34 .btn {
+    background: transparent; color: #48cae4; border: 1px solid #48cae4;
+    border-radius: 4px; text-transform: uppercase; letter-spacing: 2px;
+  }
+  .s34 .sample-title { color: #90e0ef; letter-spacing: 2px; }
+
+  /* S35 Tapd style */
+  .s35 {
+    background: linear-gradient(180deg, #ffffff 0%, #f7faff 100%);
+    color: #273b5c;
+    border: 1px solid #dfe7f2;
+    border-radius: 8px;
+    box-shadow: 0 12px 32px rgba(28,43,67,0.08);
+  }
+  .s35 .badge { background: #2f7cf6; color: #fff; border-radius: 4px; }
+  .s35 .sample-title {
+    color: #213554;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+  .s35 .sample-text { color: #7a879a; opacity: 1; }
+  .s35 .btn {
+    background: #2f7cf6; color: #fff; border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(47,124,246,0.22);
+  }
+  .s35 .copy-prompt {
+    background: #fff;
+    color: #273b5c;
+    border-color: #cfd8e6;
+    box-shadow: 0 2px 8px rgba(28,43,67,0.08);
+  }
+  .s35 .copy-prompt:hover {
+    background: #f7faff;
+    border-color: #2f7cf6;
+  }
+  .s35 .meta {
+    border-top: 1px solid #e8edf4;
+  }
+
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+  <div class="page-header">
+    <a href="index.html">← 返回索引</a>
+    <h1>Styles Gallery</h1>
+    <p>35 种视觉风格 · 点击复制提示词给 agent 精准复用</p>
+  </div>
+
+  <div class="grid" id="grid"></div>
+  <div class="copy-toast" id="copyToast" role="status" aria-live="polite">提示词已复制</div>
+
+<script>
+const styles = [
+  ["S01","极简黑白","黑白极简，锋利利落，无冗余"],
+  ["S02","苹果柔和","苹果官网风，柔和圆润，克制优雅"],
+  ["S03","毛玻璃 Glass","半透明磨砂+彩色渐变，通透高级"],
+  ["S04","新拟态","柔和阴影+同色浮雕，触感十足"],
+  ["S05","赛博朋克","霓虹紫青，未来夜城感"],
+  ["S06","复古报纸","米黄底+衬线字，纸质印刷感"],
+  ["S07","莫兰迪灰粉","低饱和莫兰迪配色，温柔安静"],
+  ["S08","深空紫","深紫深空+荧光紫按钮，梦幻"],
+  ["S09","日式和风","和纸米色+朱红点缀，禅意留白"],
+  ["S10","孟菲斯","撞色+几何+粗描边，80年代复古潮"],
+  ["S11","极暗黑金","纯黑+烫金细节，奢华低调"],
+  ["S12","手绘涂鸦","虚线边框+手写字体，稚趣手绘感"],
+  ["S13","医疗清爽蓝","浅蓝白，医疗/医美的干净专业"],
+  ["S14","森林自然","深绿墨绿，森系有机感"],
+  ["S15","高级灰奢华","深灰+细字距+大写英文，冷峻高级"],
+  ["S16","糖果甜品","粉黄橘渐变，甜美少女心"],
+  ["S17","极客终端","黑底绿字等宽体，程序员风"],
+  ["S18","水彩渐变","粉紫青柔和渐变，梦幻水彩"],
+  ["S19","工业风金属","深灰+橙红警示色，机械工业风"],
+  ["S20","中国风水墨","米色+朱红+楷体，水墨古典"],
+  ["S21","Y2K 千禧","银色+品红青色渐变，千禧年科技感"],
+  ["S22","极简白瓷","纯白+细描边+细字，性冷淡"],
+  ["S23","咖啡拿铁","米棕+咖色，温暖咖啡馆氛围"],
+  ["S24","电竞霓虹","紫粉发光+暗夜底，电竞氛围感"],
+  ["S25","儿童卡通","撞色+粗描边+圆角，儿童教育感"],
+  ["S26","高冷时尚黑","纯黑白+大字距，奢侈品杂志感"],
+  ["S27","大自然清晨","橘粉渐变，清晨温暖感"],
+  ["S28","线框 Wireframe","纯白底黑描边，原型/极简"],
+  ["S29","珊瑚粉活力","珊瑚橘红实色，健康活力"],
+  ["S30","星空梦幻","深紫底+散落星点+紫粉按钮"],
+  ["S31","灰调冷淡","中性灰色调，商务克制"],
+  ["S32","立体 3D 卡通","紫色+粗投影阴影，弹性卡通感"],
+  ["S33","极简杂志","衬线大标题+顶部黑条，编辑设计感"],
+  ["S34","未来科技蓝","深蓝+荧光青，科技/HUD 感"],
+  ["S35","Tapd style","TAPD 企业协作工具风：深色侧栏、白底高密度表格、蓝色主操作、浅灰分割线、胶囊状态标签"],
+];
+
+const customPrompts = {
+  S35: `请使用 S35「Tapd style」风格为目标界面做视觉设计和前端实现。
+
+风格定位：
+企业级研发协作 / 项目管理 SaaS。整体感觉应当克制、清晰、高信息密度、可快速扫描，强调稳定操作感，而不是营销页或装饰型视觉。
+
+界面结构参考：
+- 使用典型 B 端工作台结构：左侧导航、顶部导航或工具栏、主内容工作区，可按场景加入右侧详情面板或筛选弹层。
+- 主内容优先服务复杂信息管理，例如表格、列表、详情字段、筛选条件、批量操作、状态流转、评论区等。
+- 页面层级要清楚：导航区、工具区、数据区、详情区彼此分隔明确，但视觉不能厚重。
+
+组件风格参考：
+- 主按钮使用清晰的品牌蓝，适合“创建、保存、提交”等高优先级动作。
+- 次按钮、筛选器、搜索框、下拉框、标签、复选框使用浅描边和低对比背景。
+- 表格/列表使用细分割线、紧凑行高、轻量 hover 高亮，适合大量数据浏览。
+- 状态、类型、优先级等信息使用小胶囊标签表达；颜色用于区分状态，但不要把具体字段或具体枚举写死。
+- 弹层、菜单、详情面板保持白底、轻阴影、浅边框、小圆角，信息排列紧凑。
+
+配色参考：
+- 基础背景以白色和浅灰蓝为主，营造干净的工作区。
+- 导航可使用深海军蓝或深蓝灰，形成稳定的企业工具气质。
+- 品牌色使用明亮蓝作为主操作和当前选中态。
+- 辅助状态色可以使用绿色、紫色、粉色、橙红等，但只作为标签或状态点缀，不大面积铺色。
+- 文本颜色分层明显：主文本深蓝灰，次级文本灰蓝，弱提示更浅。
+
+间距与密度参考：
+- 整体信息密度偏高，间距克制，适合长期办公和频繁操作。
+- 工具栏、表格行、字段列表保持紧凑但不拥挤。
+- 圆角偏小，边框细，阴影轻，避免大卡片、大留白、大标题。
+
+实现要求：
+- 可以复用这种“企业协作工具”的视觉语言，但保持组件可扩展，适配不同模块。
+- 输出需适配桌面和移动端，文字不能溢出或遮挡。
+- 避免营销感、强装饰背景、厚重渐变、过度拟物和过大的展示型排版。`
+};
+
+const grid = document.getElementById('grid');
+styles.forEach(([id, name, desc]) => {
+  const cls = id.toLowerCase();
+  const card = document.createElement('div');
+  card.className = `style-card ${cls}`;
+  card.innerHTML = `
+    <span class="badge">${id}</span>
+    <div>
+      <div class="sample-title">Design Sample</div>
+      <div class="sample-text">这是一段示例文字，用于展示该风格下的正文视觉效果。</div>
+      <div class="actions">
+        <button class="btn" type="button">Click Me</button>
+        <button class="copy-prompt" type="button" data-copy="${id}">复制提示词</button>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="name">${name}</div>
+      <div class="desc">${desc}</div>
+    </div>
+  `;
+  grid.appendChild(card);
+});
+
+function readStyleValue(value) {
+  return value && value !== "none" && value !== "normal" ? value : "无";
+}
+
+function buildStylePrompt(card, style) {
+  const [id, name, desc] = style;
+  if (customPrompts[id]) return customPrompts[id];
+
+  const badge = card.querySelector('.badge');
+  const title = card.querySelector('.sample-title');
+  const demoButton = card.querySelector('.btn');
+  const cardStyle = getComputedStyle(card);
+  const badgeStyle = getComputedStyle(badge);
+  const titleStyle = getComputedStyle(title);
+  const buttonStyle = getComputedStyle(demoButton);
+
+  return `请使用 ${id}「${name}」风格为目标界面做视觉设计和前端实现。
+
+风格定位：${desc}。
+
+核心视觉 token：
+- 页面/卡片背景：${readStyleValue(cardStyle.background)}
+- 主文字颜色：${readStyleValue(cardStyle.color)}
+- 字体：${readStyleValue(cardStyle.fontFamily)}
+- 卡片边框：${readStyleValue(cardStyle.border)}
+- 卡片圆角：${readStyleValue(cardStyle.borderRadius)}
+- 卡片阴影/发光：${readStyleValue(cardStyle.boxShadow)}
+- 标题风格：颜色 ${readStyleValue(titleStyle.color)}，字重 ${readStyleValue(titleStyle.fontWeight)}，字距 ${readStyleValue(titleStyle.letterSpacing)}，阴影 ${readStyleValue(titleStyle.textShadow)}
+- 标签风格：背景 ${readStyleValue(badgeStyle.backgroundColor)}，文字 ${readStyleValue(badgeStyle.color)}，圆角 ${readStyleValue(badgeStyle.borderRadius)}
+- 按钮风格：背景 ${readStyleValue(buttonStyle.background)}，文字 ${readStyleValue(buttonStyle.color)}，边框 ${readStyleValue(buttonStyle.border)}，圆角 ${readStyleValue(buttonStyle.borderRadius)}，阴影 ${readStyleValue(buttonStyle.boxShadow)}
+
+实现要求：
+- 保留这个风格的配色、字体气质、边框、阴影、按钮和标题语言。
+- 按具体产品内容重新组织布局，不要照搬 gallery 的示例卡片结构。
+- 输出应适配桌面和移动端，文本不能溢出或互相遮挡。
+- 避免与该风格冲突的视觉元素；如果需要扩展组件，也应从以上 token 派生。`;
+}
+
+async function copyText(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.setAttribute('readonly', '');
+  textarea.style.position = 'fixed';
+  textarea.style.left = '-9999px';
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand('copy');
+  textarea.remove();
+}
+
+function showCopied(button, styleId) {
+  const toast = document.getElementById('copyToast');
+  button.classList.add('copied');
+  button.textContent = '已复制';
+  toast.textContent = `${styleId} 提示词已复制`;
+  toast.classList.add('show');
+  window.setTimeout(() => {
+    button.classList.remove('copied');
+    button.textContent = '复制提示词';
+    toast.classList.remove('show');
+  }, 1500);
+}
+
+function showCopyFailed(button) {
+  const toast = document.getElementById('copyToast');
+  button.textContent = '复制失败';
+  toast.textContent = '复制失败，请重试';
+  toast.classList.add('show');
+  window.setTimeout(() => {
+    button.textContent = '复制提示词';
+    toast.classList.remove('show');
+  }, 1800);
+}
+
+grid.addEventListener('click', async (event) => {
+  const button = event.target.closest('[data-copy]');
+  if (!button) return;
+  const styleId = button.dataset.copy;
+  const style = styles.find(([id]) => id === styleId);
+  const card = button.closest('.style-card');
+  if (!style || !card) return;
+  const prompt = buildStylePrompt(card, style);
+  try {
+    await copyText(prompt);
+    showCopied(button, styleId);
+  } catch (error) {
+    console.error(error);
+    showCopyFailed(button);
+  }
+});
+</script>
+</body>
+</html>
