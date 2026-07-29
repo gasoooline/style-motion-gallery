@@ -1,167 +1,74 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<title>Gallery · 风格与动效索引</title>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
-    background: #0a0a0a;
-    color: #fff;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-  }
-  .container {
-    max-width: 900px;
-    width: 100%;
-  }
-  h1 {
-    font-size: 48px;
-    font-weight: 800;
-    margin-bottom: 12px;
-    background: linear-gradient(135deg, #fff 0%, #888 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .subtitle {
-    color: #888;
-    font-size: 16px;
-    margin-bottom: 60px;
-    line-height: 1.6;
-  }
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
-  .card {
-    background: linear-gradient(135deg, #1a1a1a 0%, #222 100%);
-    border: 1px solid #2a2a2a;
-    border-radius: 20px;
-    padding: 40px 32px;
-    text-decoration: none;
-    color: inherit;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    position: relative;
-    overflow: hidden;
-  }
-  .card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 50%);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .card:hover {
-    transform: translateY(-6px);
-    border-color: #444;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-  }
-  .card:hover::before {
-    opacity: 1;
-  }
-  .card .num {
-    font-size: 13px;
-    color: #666;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-weight: 600;
-  }
-  .card .title {
-    font-size: 28px;
-    font-weight: 700;
-    margin-top: 4px;
-  }
-  .card .desc {
-    color: #999;
-    font-size: 14px;
-    line-height: 1.6;
-  }
-  .card .count {
-    color: #666;
-    font-size: 13px;
-    margin-top: 12px;
-  }
-  .card .arrow {
-    position: absolute;
-    right: 32px;
-    bottom: 32px;
-    font-size: 24px;
-    color: #444;
-    transition: transform 0.3s, color 0.3s;
-  }
-  .card:hover .arrow {
-    color: #fff;
-    transform: translateX(6px);
-  }
-  .footer {
-    margin-top: 60px;
-    padding-top: 40px;
-    border-top: 1px solid #222;
-    color: #555;
-    font-size: 13px;
-    line-height: 1.8;
-  }
-  .footer code {
-    background: #1a1a1a;
-    padding: 2px 8px;
-    border-radius: 4px;
-    color: #aaa;
-    font-family: "SF Mono", Consolas, monospace;
-  }
-  @media (max-width: 640px) {
-    .cards { grid-template-columns: 1fr; }
-    h1 { font-size: 36px; }
-  }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="为产品经理准备的网页风格与交互动效参考库。看效果，复制 Prompt，准确表达设计方向。">
+  <title>Taste Gallery | 风格与动效参考库</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="gallery.css">
 </head>
-<body>
-  <div class="container">
-    <h1>🎨 Gallery</h1>
-    <p class="subtitle">
-      风格与动效的可视化字典。<br>
-      看中哪个，告诉我编号即可，例如「用 S07 的风格 + M12 的动效」。
-    </p>
+<body class="home-page">
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="TG Taste Gallery 首页">
+      <span class="brand-mark" aria-hidden="true">TG</span>
+      <span>Taste Gallery</span>
+    </a>
+    <nav class="main-nav" aria-label="主导航">
+      <a href="styles.html">网页风格</a>
+      <a href="motion.html">动效</a>
+    </nav>
+  </header>
 
-    <div class="cards">
-      <a href="styles.html" class="card">
-        <span class="num">Styles / 视觉风格</span>
-        <div class="title">35 种风格</div>
-        <div class="desc">配色 · 字体 · 卡片 · 按钮 · 标题的完整组合，每种编号 S01–S35。</div>
-        <div class="count">从极简到赛博朋克，从 Neumorphism 到 Tapd style</div>
-        <span class="arrow">→</span>
+  <main class="home-shell">
+    <section class="home-intro" aria-labelledby="home-title">
+      <p class="context-label">给产品经理的视觉词典</p>
+      <h1 id="home-title">先看见，再描述。</h1>
+      <p>浏览真实画面，找到接近的风格与动效，一键复制成可以直接交给 Codex 的 Prompt。</p>
+    </section>
+
+    <section class="library-choices" aria-label="选择参考库">
+      <a class="library-choice style-choice" href="styles.html">
+        <div class="choice-preview style-mosaic" aria-hidden="true">
+          <span class="mosaic-a">Aa</span>
+          <span class="mosaic-b"></span>
+          <span class="mosaic-c">FORM</span>
+          <span class="mosaic-d"></span>
+        </div>
+        <div class="choice-copy">
+          <span class="choice-count">16 个方向</span>
+          <h2>网页风格</h2>
+          <p>从莫兰迪极简到工业粗野。比较配色、字体、布局、材质与设计参数。</p>
+          <span class="choice-action">打开风格库 <span aria-hidden="true">→</span></span>
+        </div>
       </a>
 
-      <a href="motion.html" class="card">
-        <span class="num">Motion / 交互动效</span>
-        <div class="title">20 种动效</div>
-        <div class="desc">悬浮 · 加载 · 转场 · 微交互，每种编号 M01–M20，可点击触发。</div>
-        <div class="count">从优雅淡入到弹性缩放，涵盖常用交互场景</div>
-        <span class="arrow">→</span>
+      <a class="library-choice motion-choice" href="motion.html">
+        <div class="choice-preview motion-orbit" aria-hidden="true">
+          <span class="orbit-track"></span>
+          <span class="orbit-core"></span>
+          <span class="orbit-item item-one"></span>
+          <span class="orbit-item item-two"></span>
+          <span class="orbit-item item-three"></span>
+        </div>
+        <div class="choice-copy">
+          <span class="choice-count">20 个模式</span>
+          <h2>交互动效</h2>
+          <p>从淡入、交错入场到磁吸、滚动叙事。每个案例都能现场触发与重播。</p>
+          <span class="choice-action">打开动效库 <span aria-hidden="true">→</span></span>
+        </div>
       </a>
+    </section>
 
-      <a href="ai-product-knowledge-graph.html" class="card">
-        <span class="num">Example / AI 产品图谱</span>
-        <div class="title">S05 实战页</div>
-        <div class="desc">用赛博朋克风格呈现 AI 产品应该学习的知识结构。</div>
-        <div class="count">用户价值 · 模型能力 · 数据 RAG · 评估安全 · 商业闭环</div>
-        <span class="arrow">→</span>
-      </a>
-    </div>
+    <section class="quick-combine" aria-label="使用示例">
+      <span>组合表达</span>
+      <code>使用 S02 的视觉方向 + M02 的交错入场，生成产品落地页</code>
+    </section>
+  </main>
 
-    <div class="footer">
-      使用方式：告诉我 <code>Sxx</code> + <code>Mxx</code> 编号，我就能精准复现该风格与动效。<br>
-      例如：「做一个登录页，用 S12 极简风 + M08 淡入动效」。
-    </div>
-  </div>
+  <footer class="site-footer">
+    <span>Based on design-taste-frontend</span>
+    <span>静态站点，无登录与数据采集</span>
+  </footer>
 </body>
 </html>
