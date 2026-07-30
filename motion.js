@@ -198,10 +198,210 @@ const motionDirections = [
     motion: "使用 stroke-dasharray 与 stroke-dashoffset 从隐藏到完整",
     timing: "独立播放 1000-1800ms，或与滚动线性绑定",
     note: "路径必须表达真实关系，不作为无意义装饰，reduced-motion 直接显示完整路径"
+  },
+  {
+    id: "M21", name: "Gooey Menu", category: "导航", mode: "hover",
+    summary: "菜单项像粘液一样分离与归位，适合少量创意导航。",
+    tags: "gooey menu 粘液 菜单 导航 分离",
+    purpose: "用连续形变表达主菜单与子操作的归属关系",
+    trigger: "悬浮或点击主菜单后展开",
+    motion: "子项从同一原点分离，配合 blur + contrast 或 SVG filter 形成粘连边缘",
+    timing: "420-620ms，spring 回弹",
+    note: "只用于 3-5 个项目，保留清晰点击区与键盘顺序"
+  },
+  {
+    id: "M22", name: "Dynamic Island", category: "状态", mode: "hover",
+    summary: "紧凑状态容器扩展为操作面板，保留状态连续性。",
+    tags: "dynamic island 形态 状态 扩展 胶囊",
+    purpose: "让用户理解详细操作来自当前紧凑状态",
+    trigger: "状态变化、悬浮、聚焦或点击",
+    motion: "外形用 layout 或 scale 连续扩展，内容延迟淡入",
+    timing: "320-480ms，spring stiffness 140-190",
+    note: "网页实现是交互模式，不宣称为 Apple 官方组件"
+  },
+  {
+    id: "M23", name: "径向菜单", category: "导航", mode: "hover",
+    summary: "子操作从触发点向周围展开，适合局部上下文工具。",
+    tags: "radial menu 径向 环形 上下文 导航",
+    purpose: "在触发位置周围展示少量并列操作，缩短指针移动距离",
+    trigger: "右键、长按或显式菜单按钮",
+    motion: "4-6 个子项从中心沿圆弧 translate 展开，opacity 同步进入",
+    timing: "260-420ms，相邻子项延迟 35-55ms",
+    note: "必须提供列表式键盘替代和清晰退出机制"
+  },
+  {
+    id: "M24", name: "Speed Dial", category: "导航", mode: "hover",
+    summary: "主操作按钮沿曲线释放次级操作，适合高频工具。",
+    tags: "speed dial FAB 浮动按钮 快捷操作",
+    purpose: "把一组相关快捷操作收纳到一个明确主触发器中",
+    trigger: "点击、键盘激活或桌面端悬浮预览",
+    motion: "子按钮沿弧线 translate 移动并依次淡入",
+    timing: "300-460ms，spring damping 20-26",
+    note: "不要超过 5 个子操作，移动端保留足够触控区"
+  },
+  {
+    id: "M25", name: "Mega Menu Reveal", category: "导航", mode: "hover",
+    summary: "大型导航面板分组揭示，适合内容层级较多的站点。",
+    tags: "mega menu reveal 大型菜单 导航 分组",
+    purpose: "在不离开当前页面的情况下展示清晰的信息架构",
+    trigger: "导航项悬浮、点击或键盘展开",
+    motion: "面板先淡入上移，内部栏目按列 stagger 进入",
+    timing: "面板 280-360ms，项目间隔 45-70ms",
+    note: "维护 aria-expanded、Escape 关闭与焦点管理"
+  },
+  {
+    id: "M26", name: "全息箔片", category: "悬浮", mode: "hover",
+    summary: "色谱箔层随视角滑过表面，适合少量重点收藏或会员卡。",
+    tags: "holographic foil 全息 箔片 卡片 视角",
+    purpose: "用材质变化强调稀缺或可收藏对象",
+    trigger: "桌面端指针移动，键盘聚焦使用固定高光",
+    motion: "大尺寸色谱伪元素通过 transform 滑过卡片，本体只轻微倾斜",
+    timing: "360-560ms，ease-out",
+    note: "不用在普通信息卡网格，保证文字对比度"
+  },
+  {
+    id: "M27", name: "滑动卡堆", category: "反馈", mode: "hover",
+    summary: "顶层卡片被拖离后显示下一张，适合快速取舍。",
+    tags: "swipe stack tinder 卡堆 滑动 拖拽",
+    purpose: "让用户通过直接操作快速处理一组相同类型的对象",
+    trigger: "水平拖拽超过阈值或点击取舍按钮",
+    motion: "顶层卡跟随指针 translate + rotate，超过阈值后离场，下层卡放大归位",
+    timing: "跟随指针，释放后 spring 300-500ms",
+    note: "必须提供撤销、键盘和明确按钮替代"
+  },
+  {
+    id: "M28", name: "Liquid Swipe", category: "转场", mode: "hover",
+    summary: "流体边缘横向覆盖场景，用于少量重点页面转场。",
+    tags: "liquid swipe 液态 转场 遮罩",
+    purpose: "明确分隔两个视觉场景，并保留方向感",
+    trigger: "重点路由切换或故事章节转场",
+    motion: "带柔和曲线边缘的遮罩层使用 translateX 穿过视口",
+    timing: "650-900ms，cubic-bezier(0.76, 0, 0.24, 1)",
+    note: "网页轻量实现是近似效果，不应拦截高频路由"
+  },
+  {
+    id: "M29", name: "Coverflow", category: "画廊", mode: "hover",
+    summary: "中心媒体放大，两侧项保留倾斜与上下文。",
+    tags: "coverflow carousel 画廊 轮播 3D",
+    purpose: "在有限宽度内强调当前媒体，同时显示前后关系",
+    trigger: "拖拽、滚轮、方向键或点击两侧项",
+    motion: "中心项 scale 到 1，两侧 rotateY + translateX，状态变化使用 layout 动画",
+    timing: "420-620ms，spring damping 24-30",
+    note: "保留标准列表或按钮导航，不让 3D 姿态影响可读性"
+  },
+  {
+    id: "M30", name: "手风琴画廊", category: "画廊", mode: "hover",
+    summary: "窄幅媒体在聚焦时展开，适合作品或系列对比。",
+    tags: "accordion image slider 手风琴 画廊 图片",
+    purpose: "让用户在一个连续画廊中通过局部展开比较媒体",
+    trigger: "悬浮、聚焦或点击某一媒体条",
+    motion: "当前条目比例扩大，相邻条目退让，标题同步淡入",
+    timing: "360-520ms，cubic-bezier(0.16, 1, 0.3, 1)",
+    note: "使用 CSS Grid 或 Motion layout，不要在高频列表中使用"
+  },
+  {
+    id: "M31", name: "Hover Image Trail", category: "画廊", mode: "hover",
+    summary: "指针路径后方依次出现媒体缩略图，适合创意目录。",
+    tags: "hover image trail 图片 轨迹 指针 画廊",
+    purpose: "用连续缩略图帮助用户预览当前索引所指的视觉内容",
+    trigger: "指针在列表或画布中移动",
+    motion: "少量图片按距离阈值出现，使用 transform + opacity 移动与消失",
+    timing: "跟随指针，单张保留 450-700ms",
+    note: "限制 DOM 数量并复用节点，不要遮挡可点击内容"
+  },
+  {
+    id: "M32", name: "Glitch Image", category: "画廊", mode: "hover",
+    summary: "短暂 RGB 错位与切片抽动，适合音乐、游戏与实验品牌。",
+    tags: "glitch image RGB 错位 切片 实验",
+    purpose: "表达信号干扰、切换或数字媒介感",
+    trigger: "悬浮、媒体切换或短暂加载完成",
+    motion: "复制媒体层使用 clip-path、轻微 translateX 与不同色通道",
+    timing: "180-320ms，最多 2-3 次短促脉冲",
+    note: "不要无限循环，避免强烈闪烁并支持 reduced-motion"
+  },
+  {
+    id: "M33", name: "Text Mask Reveal", category: "文字", mode: "hover",
+    summary: "大字作为媒体窗口，在文字内部揭示运动层。",
+    tags: "text mask reveal 文字 遮罩 媒体",
+    purpose: "把文字与媒体合并为一个主视觉信息",
+    trigger: "首屏入场、悬浮或章节切换",
+    motion: "背景媒体使用文字 mask 裁切，内部层只做 transform 位移",
+    timing: "600-900ms，ease-out",
+    note: "只适合短标题，另保留真实文本供辅助技术读取"
+  },
+  {
+    id: "M34", name: "Circular Text", category: "文字", mode: "hover",
+    summary: "短文字沿环形路径旋转，适合印章、媒体控件与状态。",
+    tags: "circular text path 环形 文字 旋转",
+    purpose: "用环形路径表达循环、围绕或持续状态",
+    trigger: "悬浮、播放状态或页面可见时",
+    motion: "文字路径容器使用 rotate 慢速旋转",
+    timing: "完整一圈 8-16s，linear",
+    note: "不承载关键指令，reduced-motion 下保持静态"
+  },
+  {
+    id: "M35", name: "Gradient Stroke", category: "文字", mode: "hover",
+    summary: "色彩高光沿文字轮廓通过，用于少量重点标题。",
+    tags: "gradient stroke 渐变 描边 文字 高光",
+    purpose: "在不填满文字的情况下强调短标题的边界与节奏",
+    trigger: "标题入场或悬浮",
+    motion: "大尺寸色谱层经过文字描边 mask，仅动画 transform",
+    timing: "700-1100ms，ease-in-out",
+    note: "全页最多一处，不要与渐变填充标题叠加"
+  },
+  {
+    id: "M36", name: "Particle Burst", category: "反馈", mode: "hover",
+    summary: "操作成功时少量粒子向外释放，强化完成感。",
+    tags: "particle explosion burst 粒子 成功 按钮",
+    purpose: "对低频、明确成功的操作提供短促庆祝反馈",
+    trigger: "收藏、达成或提交成功",
+    motion: "8-14 个粒子从按钮边缘使用 translate + scale + opacity 离开",
+    timing: "450-700ms，ease-out",
+    note: "不用于每次常规点击，避免大量 DOM 与 canvas 浪费"
+  },
+  {
+    id: "M37", name: "Lens Blur", category: "状态", mode: "hover",
+    summary: "前景保持清晰，相邻层级轻微失焦，用于强调当前对象。",
+    tags: "lens blur depth 景深 模糊 聚焦",
+    purpose: "在层叠媒体中用景深明确当前操作层",
+    trigger: "悬浮、聚焦、模态面板打开或选中状态",
+    motion: "当前层轻微 scale 与淡入，背景层逐步降低 opacity 并应用模糊",
+    timing: "280-420ms，ease-out",
+    note: "提供 prefers-reduced-transparency 纯色降级，不模糊关键信息"
+  },
+  {
+    id: "M38", name: "Split-Screen Scroll", category: "滚动", mode: "hover",
+    summary: "左右画面沿相反方向推进，用于对比两条并行叙事。",
+    tags: "split screen scroll 分屏 反向 滚动 叙事",
+    purpose: "把两组对照内容放在同一时间轴上推进",
+    trigger: "章节通过视口时与滚动进度绑定",
+    motion: "左右轨道分别使用相反 translateY，容器保持稳定",
+    timing: "与滚动 scrub 绑定，无独立缓动",
+    note: "必须存在真实对比关系，普通内容不要强行分屏"
+  },
+  {
+    id: "M39", name: "Drag-to-Pan Grid", category: "画廊", mode: "hover",
+    summary: "用户拖动大型画布查看空间分布的媒体。",
+    tags: "drag to pan grid 拖动 画布 无边界 画廊",
+    purpose: "在空间关系比列表顺序更重要时允许自由探索",
+    trigger: "pointerdown 后拖动，释放时保留少量惯性",
+    motion: "整个画布轨道使用 motion value translate，不在每帧更新 React state",
+    timing: "跟随指针，惯性回收 300-700ms",
+    note: "提供缩略导航、重置位置与键盘替代"
+  },
+  {
+    id: "M40", name: "Sequence Scroll", category: "滚动", mode: "hover",
+    summary: "帧序列随进度切换，用于拆解产品、过程或空间变化。",
+    tags: "locomotive sequence scroll 帧序列 滚动 产品拆解",
+    purpose: "把连续过程映射到用户可控的页面进度上",
+    trigger: "容器置顶后将滚动进度映射到图像或视频帧",
+    motion: "通过 canvas 或视频 currentTime 根据进度渲染当前帧",
+    timing: "与滚动 scrub 绑定，预加载关键帧",
+    note: "使用成熟帧序列方案，预留尺寸并提供静态首帧降级"
   }
 ];
 
-const motionCategories = ["全部", "入场", "悬浮", "反馈", "状态", "文字", "转场", "滚动"];
+const motionCategories = ["全部", "入场", "悬浮", "反馈", "状态", "文字", "导航", "画廊", "转场", "滚动"];
 let activeMotionCategory = "全部";
 let motionQuery = "";
 
@@ -226,7 +426,27 @@ function motionStage(id) {
     M17: '<div class="stack-demo"><span></span><span></span><span></span></div>',
     M18: '<div class="pan-demo"><span></span><span></span><span></span></div>',
     M19: '<div class="zoom-demo"><span>FOCUS</span></div>',
-    M20: '<div class="path-demo"><svg viewBox="0 0 220 90" role="img" aria-label="弯曲路径逐步绘制"><path d="M8 70 C 48 8, 84 82, 122 34 S 180 8, 212 48" /></svg></div>'
+    M20: '<div class="path-demo"><svg viewBox="0 0 220 90" role="img" aria-label="弯曲路径逐步绘制"><path d="M8 70 C 48 8, 84 82, 122 34 S 180 8, 212 48" /></svg></div>',
+    M21: '<div class="gooey-demo"><span></span><span></span><span></span><span></span></div>',
+    M22: '<div class="island-demo"><div><span>正在播放</span><small>STILL</small></div></div>',
+    M23: '<div class="radial-demo"><b>+</b><span></span><span></span><span></span><span></span></div>',
+    M24: '<div class="speed-dial-demo"><b>+</b><span></span><span></span><span></span></div>',
+    M25: '<div class="mega-demo"><strong>导航</strong><div><span></span><span></span><span></span></div></div>',
+    M26: '<div class="foil-demo"><strong>MEMBER</strong><span>HOLOGRAPHIC</span></div>',
+    M27: '<div class="swipe-demo"><span></span><span></span><span></span></div>',
+    M28: '<div class="liquid-demo"><strong>NEXT</strong></div>',
+    M29: '<div class="coverflow-demo"><span></span><span></span><span></span></div>',
+    M30: '<div class="image-accordion-demo"><span></span><span></span><span></span><span></span></div>',
+    M31: '<div class="trail-demo"><span></span><span></span><span></span><span></span></div>',
+    M32: '<div class="glitch-demo" data-label="SIGNAL">SIGNAL</div>',
+    M33: '<div class="text-mask-demo">FORM</div>',
+    M34: '<div class="circular-demo"><div><span>TYPE</span><span>FORM</span><span>MOVE</span><span>LOOP</span></div><b>+</b></div>',
+    M35: '<div class="stroke-demo">CHROMA</div>',
+    M36: '<div class="particle-demo"><button type="button">完成</button><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>',
+    M37: '<div class="lens-demo"><span></span><span></span><span></span></div>',
+    M38: '<div class="split-demo"><div><span></span><span></span></div><div><span></span><span></span></div></div>',
+    M39: '<div class="drag-grid-demo"><div><span></span><span></span><span></span><span></span><span></span><span></span></div></div>',
+    M40: '<div class="sequence-demo"><span></span><span></span><span></span><span></span></div>'
   };
   return stages[id];
 }
@@ -288,6 +508,18 @@ function replayMotion(card) {
   if (card.dataset.motionId === "M09") runCounter(card);
 }
 
+function resetMotion(card) {
+  card.querySelector(".motion-stage").classList.remove("play");
+  window.clearInterval(card._scrambleTimer);
+  cancelAnimationFrame(card._counterFrame);
+
+  const scramble = card.querySelector(".scramble-text");
+  if (scramble) scramble.textContent = scramble.dataset.text;
+
+  const counter = card.querySelector(".count-demo");
+  if (counter) counter.textContent = "0";
+}
+
 function wireInteractiveDemo(card, motion) {
   const stage = card.querySelector(".motion-stage");
   if (motion.id === "M06") {
@@ -334,7 +566,7 @@ function motionCard(motion) {
   const replayLabel = motion.mode === "hover" ? "悬浮体验" : motion.mode === "click" ? "点击体验" : motion.mode === "loop" ? "循环播放" : "重播";
   const canReplay = motion.mode === "replay";
   article.innerHTML = `
-    <div class="specimen-preview motion-stage play">${motionStage(motion.id)}</div>
+    <div class="specimen-preview motion-stage">${motionStage(motion.id)}</div>
     <div class="specimen-info">
       <div>
         <span class="specimen-id">${motion.id} · ${motion.category}</span>
@@ -349,6 +581,16 @@ function motionCard(motion) {
 
   const replay = article.querySelector(".replay-button");
   if (canReplay) replay.addEventListener("click", () => replayMotion(article));
+  article.addEventListener("pointerenter", () => replayMotion(article));
+  article.addEventListener("pointerleave", () => {
+    if (!article.contains(document.activeElement)) resetMotion(article);
+  });
+  article.addEventListener("focusin", (event) => {
+    if (!article.contains(event.relatedTarget)) replayMotion(article);
+  });
+  article.addEventListener("focusout", (event) => {
+    if (!article.contains(event.relatedTarget)) resetMotion(article);
+  });
   article.querySelector(".copy-button").addEventListener("click", async (event) => {
     try {
       await TasteGallery.copyText(motionPrompt(motion));
@@ -359,10 +601,6 @@ function motionCard(motion) {
     }
   });
   wireInteractiveDemo(article, motion);
-  requestAnimationFrame(() => {
-    if (motion.id === "M08") runScramble(article);
-    if (motion.id === "M09") runCounter(article);
-  });
   return article;
 }
 

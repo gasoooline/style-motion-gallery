@@ -3,72 +3,107 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="为产品经理准备的网页风格与交互动效参考库。看效果，复制 Prompt，准确表达设计方向。">
-  <title>Taste Gallery | 风格与动效参考库</title>
+  <meta name="description" content="风格橱柜帮助每个人直观感受网页风格与交互动效，更准确地捕捉符合心意的灵感。">
+  <title>风格橱柜 | 网页风格与动效灵感库</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="gallery.css">
 </head>
 <body class="home-page">
-  <header class="site-header">
-    <a class="brand" href="index.html" aria-label="TG Taste Gallery 首页">
+  <header class="site-header home-header">
+    <a class="brand home-brand" href="index.html" aria-label="风格橱柜首页">
       <span class="brand-mark" aria-hidden="true">TG</span>
-      <span>Taste Gallery</span>
+      <span>风格橱柜</span>
     </a>
-    <nav class="main-nav" aria-label="主导航">
-      <a href="styles.html">网页风格</a>
-      <a href="motion.html">动效</a>
-    </nav>
+    <p class="home-header-note">网页风格与动效灵感库</p>
   </header>
 
   <main class="home-shell">
     <section class="home-intro" aria-labelledby="home-title">
-      <p class="context-label">给产品经理的视觉词典</p>
-      <h1 id="home-title">先看见，再描述。</h1>
-      <p>浏览真实画面，找到接近的风格与动效，一键复制成可以直接交给 Codex 的 Prompt。</p>
+      <p class="context-label">为不熟悉设计语言的人准备</p>
+      <h1 id="home-title">风格橱柜</h1>
+      <p class="home-statement">先感受，再说清楚。</p>
+      <p class="home-description">直观感受网页风格与交互动效，更准确地捕捉符合心意的灵感。</p>
+      <div class="home-meta" aria-label="参考库内容数量">
+        <span><strong>22</strong> 种网页风格</span>
+        <span><strong>40</strong> 种动效模式</span>
+      </div>
     </section>
 
-    <section class="library-choices" aria-label="选择参考库">
-      <a class="library-choice style-choice" href="styles.html">
-        <div class="choice-preview style-mosaic" aria-hidden="true">
-          <span class="mosaic-a">Aa</span>
-          <span class="mosaic-b"></span>
-          <span class="mosaic-c">FORM</span>
-          <span class="mosaic-d"></span>
-        </div>
-        <div class="choice-copy">
-          <span class="choice-count">16 个方向</span>
-          <h2>网页风格</h2>
-          <p>从莫兰迪极简到工业粗野。比较配色、字体、布局、材质与设计参数。</p>
-          <span class="choice-action">打开风格库 <span aria-hidden="true">→</span></span>
-        </div>
-      </a>
+    <section class="home-browser" aria-label="选择灵感参考库">
+      <div class="home-tabs" role="tablist" aria-label="参考库类型">
+        <button class="home-tab active" id="styleTab" type="button" role="tab" aria-selected="true" aria-controls="stylePanel" tabindex="0">
+          网页风格
+        </button>
+        <button class="home-tab" id="motionTab" type="button" role="tab" aria-selected="false" aria-controls="motionPanel" tabindex="-1">
+          交互动效
+        </button>
+      </div>
 
-      <a class="library-choice motion-choice" href="motion.html">
-        <div class="choice-preview motion-orbit" aria-hidden="true">
-          <span class="orbit-track"></span>
-          <span class="orbit-core"></span>
-          <span class="orbit-item item-one"></span>
-          <span class="orbit-item item-two"></span>
-          <span class="orbit-item item-three"></span>
-        </div>
-        <div class="choice-copy">
-          <span class="choice-count">20 个模式</span>
-          <h2>交互动效</h2>
-          <p>从淡入、交错入场到磁吸、滚动叙事。每个案例都能现场触发与重播。</p>
-          <span class="choice-action">打开动效库 <span aria-hidden="true">→</span></span>
-        </div>
-      </a>
-    </section>
+      <div class="home-panel-wrap">
+        <article class="home-panel active" id="stylePanel" role="tabpanel" aria-labelledby="styleTab">
+          <div class="home-preview style-cabinet" aria-label="莫兰迪留白、冷静极简与冷感奢华的风格预览">
+            <div class="cabinet-main">
+              <span class="preview-index">S02</span>
+              <div>
+                <p>STILL</p>
+                <h2>安静地表达</h2>
+                <span>莫兰迪留白</span>
+              </div>
+            </div>
+            <div class="cabinet-sample sample-minimal">
+              <span>S01</span>
+              <strong>少一点干扰</strong>
+              <small>冷静极简</small>
+            </div>
+            <div class="cabinet-sample sample-cold">
+              <span>S04</span>
+              <strong>精密，不喧哗</strong>
+              <small>冷感奢华</small>
+            </div>
+          </div>
+          <div class="home-panel-copy">
+            <div>
+              <h2>从画面找到风格</h2>
+              <p>比较配色、字体、布局与材质，复制完整表达。</p>
+            </div>
+            <a class="home-panel-link" href="styles.html">浏览 22 种风格 <span aria-hidden="true">&#8599;</span></a>
+          </div>
+        </article>
 
-    <section class="quick-combine" aria-label="使用示例">
-      <span>组合表达</span>
-      <code>使用 S02 的视觉方向 + M02 的交错入场，生成产品落地页</code>
+        <article class="home-panel" id="motionPanel" role="tabpanel" aria-labelledby="motionTab" hidden>
+          <div class="home-preview motion-cabinet" aria-label="淡入上移、交错入场和磁吸反馈的动效预览">
+            <div class="motion-demo motion-fade-demo" role="group" tabindex="0" aria-label="悬浮体验淡入上移动效">
+              <span>M01</span>
+              <i aria-hidden="true"></i>
+              <small>淡入上移</small>
+            </div>
+            <div class="motion-demo motion-stagger-demo" role="group" tabindex="0" aria-label="悬浮体验交错入场动效">
+              <span>M02</span>
+              <div aria-hidden="true"><i></i><i></i><i></i></div>
+              <small>交错入场</small>
+            </div>
+            <div class="motion-demo motion-magnetic-demo" role="group" tabindex="0" aria-label="悬浮体验磁吸反馈动效">
+              <span>M04</span>
+              <i aria-hidden="true">靠近</i>
+              <small>磁吸反馈</small>
+            </div>
+          </div>
+          <div class="home-panel-copy">
+            <div>
+              <h2>现场感受运动节奏</h2>
+              <p>触发、重播并比较反馈方式，复制可执行的动效描述。</p>
+            </div>
+            <a class="home-panel-link" href="motion.html">浏览 40 种动效 <span aria-hidden="true">&#8599;</span></a>
+          </div>
+        </article>
+      </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <span>Based on design-taste-frontend</span>
-    <span>静态站点，无登录与数据采集</span>
+  <footer class="site-footer home-footer">
+    <span>基于 design-taste-frontend 构建</span>
+    <span>无需登录，不收集数据</span>
   </footer>
+  <script src="home.js"></script>
 </body>
 </html>
