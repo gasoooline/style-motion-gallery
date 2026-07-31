@@ -238,10 +238,100 @@ const styleDirections = [
     layout: "深色全页主题、产品局部特写、窄文本与强边界",
     material: "低反射表面、细棕色边框、极轻暖色阴影",
     avoid: "不要中途切换成浅色区块，不要加入金色和酒红作为第二强调色"
+  },
+  {
+    id: "S17",
+    name: "Bento 产品布局",
+    category: "布局",
+    className: "style-bento",
+    summary: "不等尺寸单元组织信息，用层级而非卡片数量表达主次。",
+    tags: "Bento 便当盒 不对称 产品 布局 网格",
+    dials: [7, 4, 4],
+    preview: ["FIELD", "一屏分清主次", "Mixed sizes create hierarchy without adding noise.", "查看结构"],
+    palette: "mist #E3E5DF、charcoal #252925、sage #7D9184、dusty rose #CDBFBA",
+    type: "现代无衬线，数字与标签可使用等宽体，层级靠字号与字重建立",
+    layout: "严格 CSS Grid，每个内容对应一个单元，大小比例反映真实优先级",
+    material: "6-8px 圆角、色面与媒体混排、阴影只用于真实层级",
+    avoid: "不要生成空单元，不要全部做成白底文字卡片"
+  },
+  {
+    id: "S18",
+    name: "Aurora Mesh",
+    category: "实验",
+    className: "style-aurora",
+    summary: "多层柔和色域建立空间氛围，适合艺术、音乐与沉浸式品牌。",
+    tags: "Aurora Mesh 极光 网格渐变 色域 沉浸",
+    dials: [8, 6, 3],
+    preview: ["AURORA", "色彩也有空间", "Layered fields support the message, not replace it.", "进入体验"],
+    palette: "smoke #24282A、muted cyan #6F9DA0、dusty coral #BC7F75、pale mint #B9CBC1",
+    type: "中等字重无衬线，文字保持高对比，不使用渐变标题",
+    layout: "大色域做背景，内容保持窄列与明确主路径",
+    material: "层叠渐变、低对比颗粒、极轻内阴影",
+    avoid: "不要默认使用紫蓝 AI 光晕，不要让色域影响正文可读性"
+  },
+  {
+    id: "S19",
+    name: "Kinetic Type",
+    category: "编辑",
+    className: "style-kinetic",
+    summary: "排版本身成为主视觉，通过尺度、重复与节奏表达品牌性格。",
+    tags: "Kinetic Type 动态排版 大字 节奏 品牌",
+    dials: [9, 8, 3],
+    preview: ["TYPE", "让文字建立动势", "Scale, rhythm and one clear reading order.", "查看篇章"],
+    palette: "paper #ECEDE8、ink #202320、signal coral #C96958",
+    type: "宽体或几何无衬线，强调词使用同字体的斜体或粗体",
+    layout: "文字块不对称排布，保留唯一清晰阅读顺序",
+    material: "纯平面排版，运动只使用 transform 与 opacity",
+    avoid: "不要为造型强行换行，不要混用随机衬线强调词"
+  },
+  {
+    id: "S20",
+    name: "Chroma Grid",
+    category: "科技",
+    className: "style-chroma",
+    summary: "深色网格与局部色谱边界，用于强调可探索的内容组。",
+    tags: "Chroma Grid 色谱 网格 科技 卡片 交互",
+    dials: [8, 6, 4],
+    preview: ["CHROMA", "边界指向当前关注", "Color appears only where interaction needs it.", "探索内容"],
+    palette: "charcoal #171B1C、mist #E7EAE6、muted cyan #72A5A1、dusty rose #B97778",
+    type: "清晰无衬线配少量等宽标签",
+    layout: "不等宽网格，色谱边界只出现在当前可交互项",
+    material: "细内边框、低亮度色谱、8px 圆角",
+    avoid: "不要整页外发光，不要同时使用多组高饱和强调色"
+  },
+  {
+    id: "S21",
+    name: "可信服务",
+    category: "极简",
+    className: "style-trust",
+    summary: "高可读性、明确操作与稳定结构，适合公共服务、金融和规范化流程。",
+    tags: "可信 服务 无障碍 公共 金融 稳定",
+    dials: [3, 2, 5],
+    preview: ["SERVICE", "每一步都清楚", "Clear language and predictable actions build trust.", "开始办理"],
+    palette: "cool white #F3F5F3、navy gray #29363D、service blue #3F6478、focus amber #C7832E",
+    type: "高可读无衬线，正文保持舒适行高与足够对比",
+    layout: "稳定单列主流程、明确标题和就近错误反馈",
+    material: "实色表面、清晰焦点环、4-6px 圆角",
+    avoid: "不要玻璃、漂浮导航、装饰动画或含糊按钮文案"
+  },
+  {
+    id: "S22",
+    name: "单色强调",
+    category: "品牌",
+    className: "style-monopop",
+    summary: "近乎纯单色体系配一个鲜明信号色，简洁但有明确记忆点。",
+    tags: "单色 黑白 强调色 signal pop 品牌",
+    dials: [6, 4, 3],
+    preview: ["SIGNAL", "只保留一个信号", "Monochrome structure, one unmistakable action.", "执行操作"],
+    palette: "off-white #ECEEEA、off-black #202220、signal green #57B879",
+    type: "中性无衬线，按钮与关键数字使用更高字重",
+    layout: "大留白、左对齐信息与唯一高对比操作",
+    material: "平面、无外发光、阴影只用于真实层级",
+    avoid: "不要再加入第二强调色，不要用渐变文字补充变化"
   }
 ];
 
-const styleCategories = ["全部", "极简", "编辑", "品牌", "实验", "科技", "玩心"];
+const styleCategories = ["全部", "极简", "编辑", "品牌", "布局", "实验", "科技", "玩心"];
 let activeStyleCategory = "全部";
 let styleQuery = "";
 
