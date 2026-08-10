@@ -337,7 +337,7 @@ let styleQuery = "";
 let activeDemoStyle = null;
 
 const sharedStyleDemo = {
-  brand: "WorkBuddy",
+  brand: "AI产品工作台",
   nav: "工作台 / 项目 / 报告",
   kicker: "PROJECT OS",
   title: "把设计请求变成可执行方案",
@@ -355,7 +355,7 @@ function stylePrompt(style) {
   return `请使用 design-taste-frontend，并采用 ${style.id}「${style.name}」作为目标页面的视觉方向。
 
 Design Read：先根据我的产品类型、目标用户与核心动作确认这个方向是否合适。如存在明显分歧，只问一个澄清问题。
-统一 demo：请用同一份 WorkBuddy 产品 demo 承载这个风格，不要为不同风格改写 demo 内容。
+统一 demo：请用同一份 AI 产品工作台 demo 承载这个风格，不要为不同风格改写 demo 内容。
 三项参数：DESIGN_VARIANCE ${style.dials[0]} / MOTION_INTENSITY ${style.dials[1]} / VISUAL_DENSITY ${style.dials[2]}。
 色彩：${style.palette}。
 字体：${style.type}。
@@ -395,7 +395,7 @@ function styleCard(style) {
   article.dataset.category = style.category;
   article.dataset.search = TasteGallery.normalize(`${style.id}${style.name}${style.category}${style.summary}${style.tags}`);
   article.innerHTML = `
-    <div class="specimen-preview style-stage style-demo-preview ${style.className}" role="img" aria-label="${style.id} ${style.name} 使用统一 WorkBuddy demo 的预览图">
+    <div class="specimen-preview style-stage style-demo-preview ${style.className}" role="img" aria-label="${style.id} ${style.name} 使用统一 AI 产品工作台 demo 的预览图">
       ${styleDemoMarkup(style)}
     </div>
     <div class="specimen-info">
