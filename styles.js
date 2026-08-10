@@ -334,11 +334,28 @@ const styleDirections = [
 const styleCategories = ["全部", "极简", "编辑", "品牌", "布局", "实验", "科技", "玩心"];
 let activeStyleCategory = "全部";
 let styleQuery = "";
+let activeDemoStyle = null;
+
+const sharedStyleDemo = {
+  brand: "WorkBuddy",
+  nav: "工作台 / 项目 / 报告",
+  kicker: "PROJECT OS",
+  title: "把设计请求变成可执行方案",
+  copy: "统一收集需求、自动拆解任务、沉淀可复用的项目知识。",
+  cta: "生成方案",
+  stats: [
+    ["47", "进行中"],
+    ["12h", "节省时间"],
+    ["8.6", "满意度"]
+  ],
+  tasks: ["需求澄清", "页面草图", "交付清单"]
+};
 
 function stylePrompt(style) {
   return `请使用 design-taste-frontend，并采用 ${style.id}「${style.name}」作为目标页面的视觉方向。
 
 Design Read：先根据我的产品类型、目标用户与核心动作确认这个方向是否合适。如存在明显分歧，只问一个澄清问题。
+统一 demo：请用同一份 WorkBuddy 产品 demo 承载这个风格，不要为不同风格改写 demo 内容。
 三项参数：DESIGN_VARIANCE ${style.dials[0]} / MOTION_INTENSITY ${style.dials[1]} / VISUAL_DENSITY ${style.dials[2]}。
 色彩：${style.palette}。
 字体：${style.type}。
@@ -349,21 +366,37 @@ Design Read：先根据我的产品类型、目标用户与核心动作确认这
 请不要只替换配色。需要把这一方向落实到页面构图、字体层级、间距、图像策略、按钮、导航和交互状态。先输出一行 Design Read 与三项参数，再开始实现。完成后执行 design-taste-frontend 的 Pre-Flight Check。`;
 }
 
+function styleDemoMarkup(style, mode = "card") {
+  const statItems = (mode === "full" ? sharedStyleDemo.stats : sharedStyleDemo.stats.slice(0, 2))
+    .map(([value, label]) => `<span><strong>${value}</strong><em>${label}</em></span>`)
+    .join("");
+  const taskItems = (mode === "full" ? sharedStyleDemo.tasks : sharedStyleDemo.tasks.slice(0, 2))
+    .map((task) => `<li>${task}</li>`)
+    .join("");
+
+  return `
+    <div class="sample-nav">
+      <span>${sharedStyleDemo.brand}</span>
+      <span>${sharedStyleDemo.nav}</span>
+    </div>
+    <div class="sample-body demo-body demo-${mode}">
+      <span class="sample-kicker">${sharedStyleDemo.kicker}</span>
+      <div class="sample-title">${sharedStyleDemo.title}</div>
+      <div class="sample-copy">${sharedStyleDemo.copy}</div>
+      <div class="demo-stat-row" aria-label="统一 demo 指标">${statItems}</div>
+      <ul class="demo-task-list" aria-label="统一 demo 任务">${taskItems}</ul>
+      <span class="sample-cta">${sharedStyleDemo.cta}</span>
+    </div>`;
+}
+
 function styleCard(style) {
   const article = document.createElement("article");
   article.className = "specimen-card";
   article.dataset.category = style.category;
   article.dataset.search = TasteGallery.normalize(`${style.id}${style.name}${style.category}${style.summary}${style.tags}`);
-  const [brand, title, copy, cta] = style.preview;
   article.innerHTML = `
-    <div class="specimen-preview style-stage ${style.className}">
-      <div class="sample-nav"><span>${brand}</span><span>Overview&nbsp;&nbsp;Archive</span></div>
-      <div class="sample-body">
-        <span class="sample-kicker">${style.category}</span>
-        <div class="sample-title">${title}</div>
-        <div class="sample-copy">${copy}</div>
-        <span class="sample-cta">${cta}</span>
-      </div>
+    <div class="specimen-preview style-stage style-demo-preview ${style.className}" role="img" aria-label="${style.id} ${style.name} 使用统一 WorkBuddy demo 的预览图">
+      ${styleDemoMarkup(style)}
     </div>
     <div class="specimen-info">
       <div>
@@ -374,7 +407,10 @@ function styleCard(style) {
           <span>VAR ${style.dials[0]}</span><span>MOTION ${style.dials[1]}</span><span>DENSITY ${style.dials[2]}</span>
         </div>
       </div>
-      <div class="card-actions"><button class="copy-button" type="button">复制 Prompt</button></div>
+      <div class="card-actions">
+        <button class="demo-button" type="button">品鉴 demo</button>
+        <button class="copy-button" type="button">复制 Prompt</button>
+      </div>
     </div>`;
 
   article.querySelector(".copy-button").addEventListener("click", async (event) => {
@@ -386,7 +422,31 @@ function styleCard(style) {
       TasteGallery.showToast("复制失败，请重试");
     }
   });
+  article.querySelector(".demo-button").addEventListener("click", () => openStyleDemo(style));
   return article;
+}
+
+function openStyleDemo(style) {
+  activeDemoStyle = style;
+  const modal = document.getElementById("styleDemoModal");
+  const stage = document.getElementById("styleDemoStage");
+  const copyButton = document.getElementById("styleDemoCopy");
+  document.getElementById("styleDemoId").textContent = style.id;
+  document.getElementById("styleDemoTitle").textContent = `${style.name} · 品鉴 demo`;
+  document.getElementById("styleDemoSummary").textContent = style.summary;
+  stage.className = `taste-modal-stage style-stage style-demo-full ${style.className}`;
+  stage.innerHTML = styleDemoMarkup(style, "full");
+  modal.hidden = false;
+  document.body.classList.add("modal-open");
+  copyButton.focus({ preventScroll: true });
+}
+
+function closeStyleDemo() {
+  const modal = document.getElementById("styleDemoModal");
+  if (modal.hidden) return;
+  modal.hidden = true;
+  document.body.classList.remove("modal-open");
+  activeDemoStyle = null;
 }
 
 function filterStyles() {
@@ -412,5 +472,19 @@ TasteGallery.createFilters(document.getElementById("styleFilters"), styleCategor
 document.getElementById("styleSearch").addEventListener("input", (event) => {
   styleQuery = event.target.value;
   filterStyles();
+});
+document.querySelectorAll("[data-close-demo]").forEach((button) => button.addEventListener("click", closeStyleDemo));
+document.getElementById("styleDemoCopy").addEventListener("click", async (event) => {
+  if (!activeDemoStyle) return;
+  try {
+    await TasteGallery.copyText(stylePrompt(activeDemoStyle));
+    TasteGallery.setCopyState(event.currentTarget, activeDemoStyle.id);
+  } catch (error) {
+    console.error(error);
+    TasteGallery.showToast("复制失败，请重试");
+  }
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") closeStyleDemo();
 });
 filterStyles();

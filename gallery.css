@@ -891,6 +891,218 @@ input:focus-visible {
   opacity: 1;
 }
 
+.demo-button {
+  min-width: 112px;
+  min-height: 40px;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 750;
+  white-space: nowrap;
+  transition: transform 150ms ease, background 150ms ease, border-color 150ms ease;
+}
+
+.demo-button:hover {
+  border-color: var(--ink);
+  background: var(--surface-strong);
+}
+
+.demo-button:active {
+  transform: scale(0.98);
+}
+
+.modal-open {
+  overflow: hidden;
+}
+
+.taste-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.taste-modal[hidden] {
+  display: none;
+}
+
+.taste-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(18, 18, 16, 0.56);
+  backdrop-filter: blur(10px);
+}
+
+.taste-modal-panel {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  width: min(1180px, 100%);
+  max-height: min(92dvh, 960px);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: 0 40px 100px rgba(17, 17, 16, 0.24);
+}
+
+.taste-modal-header,
+.taste-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px 22px;
+}
+
+.taste-modal-header {
+  border-bottom: 1px solid var(--line);
+}
+
+.taste-modal-header h2 {
+  margin: 0 0 5px;
+  font-size: 24px;
+  line-height: 1.15;
+}
+
+.taste-modal-stage {
+  min-height: 0;
+  padding: 22px;
+  overflow: auto;
+  background: var(--page);
+}
+
+.taste-modal-footer {
+  border-top: 1px solid var(--line);
+}
+
+.taste-modal-footer p {
+  margin: 0;
+  max-width: 70ch;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.modal-close-button {
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 26px;
+  line-height: 1;
+}
+
+.modal-close-button:hover {
+  border-color: var(--ink);
+  background: var(--surface-strong);
+}
+
+.style-demo-preview {
+  min-height: 320px;
+  padding: 18px;
+}
+
+.style-demo-preview .sample-nav,
+.style-demo-full .sample-nav {
+  margin-bottom: 16px;
+}
+
+.style-demo-preview .sample-body {
+  gap: 10px;
+}
+
+.style-demo-preview .sample-title {
+  max-width: 10ch;
+  font-size: clamp(28px, 4vw, 48px);
+  text-wrap: balance;
+}
+
+.style-demo-preview .demo-stat-row {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.style-demo-preview .demo-stat-row span {
+  padding: 8px 9px;
+}
+
+.style-demo-preview .demo-task-list li {
+  font-size: 11px;
+}
+
+.style-demo-full {
+  min-height: 560px;
+}
+
+.style-demo-full .sample-title {
+  max-width: 8ch;
+  font-size: clamp(40px, 5vw, 72px);
+  text-wrap: balance;
+}
+
+.demo-stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.demo-stat-row span {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.demo-stat-row strong {
+  font-size: 18px;
+  font-weight: 780;
+  overflow-wrap: anywhere;
+}
+
+.demo-stat-row em {
+  color: var(--muted);
+  font-size: 11px;
+  font-style: normal;
+  overflow-wrap: anywhere;
+}
+
+.demo-task-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.demo-task-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  font-size: 13px;
+}
+
+.demo-task-list li::before {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: currentColor;
+  content: "";
+  opacity: 0.65;
+}
+
 .empty-state {
   padding: 80px 24px;
   border: 1px dashed var(--line-strong);
@@ -1564,6 +1776,14 @@ input:focus-visible {
   .card-actions { flex-direction: row; }
   .copy-button,
   .replay-button { flex: 1; }
+  .taste-modal { padding: 12px; }
+  .taste-modal-panel { max-height: calc(100dvh - 24px); border-radius: 10px; }
+  .taste-modal-header,
+  .taste-modal-footer { align-items: stretch; padding: 14px; }
+  .taste-modal-footer { display: grid; }
+  .taste-modal-stage { padding: 14px; }
+  .style-demo-full { min-height: 500px; }
+  .style-demo-full .demo-stat-row { grid-template-columns: 1fr; }
   .site-footer { padding: 18px 16px; }
 }
 

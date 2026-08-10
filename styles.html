@@ -43,6 +43,24 @@
     </section>
   </main>
 
+  <section class="taste-modal" id="styleDemoModal" role="dialog" aria-modal="true" aria-labelledby="styleDemoTitle" hidden>
+    <div class="taste-modal-backdrop" data-close-demo></div>
+    <div class="taste-modal-panel">
+      <header class="taste-modal-header">
+        <div>
+          <span class="specimen-id" id="styleDemoId">S00</span>
+          <h2 id="styleDemoTitle">品鉴 demo</h2>
+        </div>
+        <button class="modal-close-button" type="button" data-close-demo aria-label="关闭品鉴 demo">×</button>
+      </header>
+      <div class="taste-modal-stage" id="styleDemoStage"></div>
+      <footer class="taste-modal-footer">
+        <p id="styleDemoSummary"></p>
+        <button class="copy-button" id="styleDemoCopy" type="button">复制 Prompt</button>
+      </footer>
+    </div>
+  </section>
+
   <div class="copy-toast" id="copyToast" role="status" aria-live="polite"></div>
   <footer class="site-footer">
     <span>22 个视觉方向</span>

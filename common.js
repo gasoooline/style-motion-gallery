@@ -17,11 +17,15 @@
   }
 
   async function copyText(text) {
-    if (legacyCopyText(text)) return;
     if (navigator.clipboard && window.isSecureContext) {
-      await navigator.clipboard.writeText(text);
-      return;
+      try {
+        await navigator.clipboard.writeText(text);
+        return;
+      } catch (error) {
+        // Fall back for browsers that expose Clipboard API but deny the write.
+      }
     }
+    if (legacyCopyText(text)) return;
     throw new Error("Clipboard copy failed");
   }
 
