@@ -753,8 +753,8 @@ input:focus-visible {
 .specimen-grid {
   display: grid;
   min-height: 100dvh;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
 }
 
 .specimen-grid[hidden] { display: none; }
@@ -771,17 +771,18 @@ input:focus-visible {
 
 .specimen-preview {
   position: relative;
-  min-height: 320px;
+  height: 236px;
+  min-height: 0;
   overflow: hidden;
 }
 
 .specimen-info {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 20px;
+  gap: 14px;
   align-items: end;
-  min-height: 150px;
-  padding: 22px;
+  min-height: 122px;
+  padding: 18px;
   border-top: 1px solid var(--line);
 }
 
@@ -795,24 +796,24 @@ input:focus-visible {
 }
 
 .specimen-info h2 {
-  margin: 0 0 7px;
-  font-size: 20px;
+  margin: 0 0 6px;
+  font-size: 17px;
   line-height: 1.25;
 }
 
 .specimen-info p {
-  max-width: 48ch;
+  max-width: 42ch;
   margin: 0;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.6;
 }
 
 .dial-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 12px;
-  margin-top: 14px;
+  gap: 6px 10px;
+  margin-top: 10px;
   color: #5b5b54;
   font-family: var(--mono);
   font-size: 10px;
@@ -821,17 +822,17 @@ input:focus-visible {
 .card-actions {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   align-items: stretch;
 }
 
 .copy-button,
 .replay-button {
-  min-width: 112px;
-  min-height: 40px;
+  min-width: 104px;
+  min-height: 36px;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 750;
   white-space: nowrap;
   transition: transform 150ms ease, background 150ms ease, border-color 150ms ease;
@@ -892,14 +893,14 @@ input:focus-visible {
 }
 
 .demo-button {
-  min-width: 112px;
-  min-height: 40px;
+  min-width: 104px;
+  min-height: 36px;
   border: 1px solid var(--line-strong);
   border-radius: 6px;
   background: transparent;
   color: var(--ink);
   cursor: pointer;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 750;
   white-space: nowrap;
   transition: transform 150ms ease, background 150ms ease, border-color 150ms ease;
@@ -1008,22 +1009,22 @@ input:focus-visible {
 }
 
 .style-demo-preview {
-  min-height: 320px;
-  padding: 18px;
+  min-height: 0;
+  padding: 14px;
 }
 
 .style-demo-preview .sample-nav,
 .style-demo-full .sample-nav {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .style-demo-preview .sample-body {
-  gap: 10px;
+  gap: 8px;
 }
 
 .style-demo-preview .sample-title {
   max-width: 10ch;
-  font-size: clamp(28px, 4vw, 48px);
+  font-size: clamp(22px, 2.6vw, 36px);
   text-wrap: balance;
 }
 
@@ -1032,15 +1033,15 @@ input:focus-visible {
 }
 
 .style-demo-preview .demo-stat-row span {
-  padding: 8px 9px;
+  padding: 7px 8px;
 }
 
 .style-demo-preview .demo-task-list li {
-  font-size: 11px;
+  font-size: 10px;
 }
 
 .style-demo-full {
-  min-height: 560px;
+  min-height: 520px;
 }
 
 .style-demo-full .sample-title {
@@ -1385,6 +1386,61 @@ input:focus-visible {
 .style-monopop .sample-body { position: relative; z-index: 1; }
 .style-monopop .sample-title { max-width: 8ch; font-weight: 760; }
 .style-monopop .sample-cta { background: #57b879; color: #142219; }
+
+/* Keep card specimens compact; full-size taste demos keep the expressive scale. */
+.specimen-preview.style-demo-preview {
+  height: 236px;
+  padding: 14px;
+}
+
+.specimen-preview.style-demo-preview .sample-nav {
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 9px;
+}
+
+.specimen-preview.style-demo-preview .sample-body {
+  gap: 7px;
+}
+
+.specimen-preview.style-demo-preview .sample-kicker {
+  font-size: 9px;
+}
+
+.specimen-preview.style-demo-preview .sample-title {
+  max-width: 11ch;
+  font-size: clamp(21px, 2.2vw, 32px);
+  line-height: 1.02;
+}
+
+.specimen-preview.style-demo-preview .sample-copy {
+  max-width: 28ch;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.specimen-preview.style-demo-preview .sample-cta {
+  min-height: 28px;
+  padding-inline: 11px;
+  font-size: 9px;
+}
+
+.specimen-preview.style-demo-preview .demo-stat-row {
+  gap: 6px;
+}
+
+.specimen-preview.style-demo-preview .demo-stat-row span {
+  padding: 6px 7px;
+}
+
+.specimen-preview.style-demo-preview .demo-stat-row strong {
+  font-size: 13px;
+}
+
+.specimen-preview.style-demo-preview .demo-stat-row em,
+.specimen-preview.style-demo-preview .demo-task-list li {
+  font-size: 9px;
+}
 
 /* Motion specimens */
 .motion-grid .specimen-preview {
@@ -1754,8 +1810,8 @@ input:focus-visible {
   .style-glass::before { background: rgba(31, 42, 44, 0.92); backdrop-filter: none; }
 }
 
-@media (max-width: 980px) {
-  .specimen-grid { grid-template-columns: 1fr; }
+@media (max-width: 860px) {
+  .specimen-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .filter-bar { grid-template-columns: minmax(220px, 320px) 1fr; }
   .result-count { display: none; }
 }
@@ -1771,9 +1827,12 @@ input:focus-visible {
   .home-intro > p:last-child,
   .gallery-heading > p:last-child { font-size: 15px; }
   .filter-bar { top: 62px; grid-template-columns: 1fr; gap: 10px; margin-bottom: 20px; }
-  .specimen-preview { min-height: 280px; }
+  .specimen-grid { grid-template-columns: 1fr; }
+  .specimen-preview,
+  .specimen-preview.style-demo-preview { height: 240px; }
   .specimen-info { grid-template-columns: 1fr; }
   .card-actions { flex-direction: row; }
+  .demo-button,
   .copy-button,
   .replay-button { flex: 1; }
   .taste-modal { padding: 12px; }
@@ -1788,8 +1847,9 @@ input:focus-visible {
 }
 
 @media (max-width: 420px) {
-  .specimen-preview { min-height: 250px; }
-  .style-stage { padding: 20px; }
-  .style-stage .sample-title { font-size: 34px; }
+  .specimen-preview,
+  .specimen-preview.style-demo-preview { height: 220px; }
+  .style-stage { padding: 16px; }
+  .style-stage .sample-title { font-size: 28px; }
   .site-footer { align-items: flex-start; flex-direction: column; }
 }
