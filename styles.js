@@ -363,7 +363,7 @@ Design Read：先根据我的产品类型、目标用户与核心动作确认这
 请不要只替换配色。需要把这一方向落实到页面构图、字体层级、间距、图像策略、按钮、导航和交互状态。先输出一行 Design Read 与三项参数，再开始实现。完成后执行 design-taste-frontend 的 Pre-Flight Check。`;
 }
 
-function styleDemoMarkup(style, mode = "card") {
+function styleDemoMarkup(style) {
   const statItems = sharedStyleDemo.stats
     .map(([value, label]) => `<span><strong>${value}</strong><em>${label}</em></span>`)
     .join("");
@@ -373,7 +373,7 @@ function styleDemoMarkup(style, mode = "card") {
       <span>${sharedStyleDemo.brand}</span>
       <span>${sharedStyleDemo.nav}</span>
     </div>
-    <div class="sample-body demo-body demo-${mode}">
+    <div class="sample-body demo-body">
       <span class="sample-kicker">${sharedStyleDemo.kicker}</span>
       <div class="sample-title">${sharedStyleDemo.title}</div>
       <div class="sample-copy">${sharedStyleDemo.copy}</div>
@@ -427,7 +427,7 @@ function openStyleDemo(style) {
   document.getElementById("styleDemoTitle").textContent = `${style.name} · 品鉴 demo`;
   document.getElementById("styleDemoSummary").textContent = style.summary;
   stage.className = `taste-modal-stage style-stage style-demo-full ${style.className}`;
-  stage.innerHTML = styleDemoMarkup(style, "full");
+  stage.innerHTML = styleDemoMarkup(style);
   modal.hidden = false;
   document.body.classList.add("modal-open");
   copyButton.focus({ preventScroll: true });
