@@ -1,7 +1,12 @@
 (function () {
   let toastTimer;
 
+  function resetCopyMode() {
+    delete document.documentElement.dataset.copyMode;
+  }
+
   function legacyCopyText(text) {
+    resetCopyMode();
     const textarea = document.createElement("textarea");
     textarea.value = text;
     textarea.setAttribute("readonly", "");
@@ -16,17 +21,52 @@
     return copied;
   }
 
+  function selectCopyFallback(text) {
+    let textarea = document.getElementById("manualCopyBuffer");
+    if (!textarea) {
+      textarea = document.createElement("textarea");
+      textarea.id = "manualCopyBuffer";
+      textarea.setAttribute("readonly", "");
+      textarea.setAttribute("aria-label", "手动复制 Prompt");
+      textarea.style.position = "fixed";
+      textarea.style.left = "16px";
+      textarea.style.bottom = "16px";
+      textarea.style.zIndex = "120";
+      textarea.style.width = "min(420px, calc(100vw - 32px))";
+      textarea.style.height = "92px";
+      textarea.style.border = "1px solid #285940";
+      textarea.style.borderRadius = "6px";
+      textarea.style.background = "#f4fff8";
+      textarea.style.color = "#183d2b";
+      textarea.style.padding = "10px";
+      textarea.style.fontSize = "12px";
+      textarea.style.boxShadow = "0 14px 40px rgba(24, 61, 43, 0.2)";
+      document.body.appendChild(textarea);
+    }
+    textarea.value = text;
+    textarea.hidden = false;
+    textarea.focus();
+    textarea.select();
+    textarea.setSelectionRange(0, textarea.value.length);
+    document.documentElement.dataset.copyMode = "manual";
+    window.setTimeout(() => {
+      if (document.activeElement !== textarea) textarea.hidden = true;
+    }, 6000);
+  }
+
   async function copyText(text) {
+    if (legacyCopyText(text)) return;
     if (navigator.clipboard && window.isSecureContext) {
       try {
+        resetCopyMode();
         await navigator.clipboard.writeText(text);
         return;
       } catch (error) {
-        // Fall back for browsers that expose Clipboard API but deny the write.
+        selectCopyFallback(text);
+        return;
       }
     }
-    if (legacyCopyText(text)) return;
-    throw new Error("Clipboard copy failed");
+    selectCopyFallback(text);
   }
 
   function showToast(message) {
@@ -65,10 +105,11 @@
 
   function setCopyState(button, label) {
     const original = button.textContent;
+    const manual = document.documentElement.dataset.copyMode === "manual";
     document.documentElement.dataset.lastCopied = label;
     button.classList.add("copied");
-    button.textContent = "已复制";
-    showToast(`${label} Prompt 已复制`);
+    button.textContent = manual ? "已选中" : "已复制";
+    showToast(manual ? `${label} Prompt 已选中，请按 ⌘C 复制` : `${label} Prompt 已复制`);
     window.setTimeout(() => {
       button.classList.remove("copied");
       button.textContent = original;
