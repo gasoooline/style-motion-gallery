@@ -14,96 +14,47 @@
       <span class="brand-mark" aria-hidden="true">TG</span>
       <span>风格橱柜</span>
     </a>
-    <p class="home-header-note">网页风格与动效灵感库</p>
   </header>
 
   <main class="home-shell">
     <section class="home-intro" aria-labelledby="home-title">
-      <p class="context-label">为不熟悉设计语言的人准备</p>
+      <p class="context-label">设计语言提示词库</p>
       <h1 id="home-title">风格橱柜</h1>
-      <p class="home-statement">先感受，再说清楚。</p>
-      <p class="home-description">直观感受网页风格与交互动效，更准确地捕捉符合心意的灵感。</p>
-      <div class="home-meta" aria-label="参考库内容数量">
-        <span><strong>22</strong> 种网页风格</span>
-        <span><strong>40</strong> 种动效模式</span>
+      <p class="home-statement">支持复制设计语言提示词，让 agent 高度还原你想要的效果。</p>
+      <p class="home-description">先看画面，再进入对应参考库。把风格、布局、材质与运动节奏，转成更容易执行的表达。</p>
+      <div class="home-usage">
+        <span>使用方式</span>
+        <p>选择一个方向，打开卡片品鉴细节，再复制 Prompt 给 agent。页面只保留必要线索，把判断留给画面。</p>
       </div>
     </section>
 
-    <section class="home-browser" aria-label="选择灵感参考库">
-      <div class="home-tabs" role="tablist" aria-label="参考库类型">
-        <button class="home-tab active" id="styleTab" type="button" role="tab" aria-selected="true" aria-controls="stylePanel" tabindex="0">
-          网页风格
-        </button>
-        <button class="home-tab" id="motionTab" type="button" role="tab" aria-selected="false" aria-controls="motionPanel" tabindex="-1">
-          交互动效
-        </button>
-      </div>
+    <section class="home-entry-grid" aria-label="进入参考库">
+      <a class="home-entry-card home-entry-style" href="styles.html">
+        <div class="home-entry-visual" aria-hidden="true">
+          <span></span>
+          <i></i>
+        </div>
+        <div class="home-entry-body">
+          <span>22 种视觉方向</span>
+          <h2>网页风格</h2>
+          <p>复制配色、字体、布局与材质的设计语言。</p>
+        </div>
+        <b aria-hidden="true">↗</b>
+      </a>
 
-      <div class="home-panel-wrap">
-        <article class="home-panel active" id="stylePanel" role="tabpanel" aria-labelledby="styleTab">
-          <div class="home-preview style-cabinet" aria-label="莫兰迪留白、冷静极简与冷感奢华的风格预览">
-            <div class="cabinet-main">
-              <span class="preview-index">S02</span>
-              <div>
-                <p>STILL</p>
-                <h2>安静地表达</h2>
-                <span>莫兰迪留白</span>
-              </div>
-            </div>
-            <div class="cabinet-sample sample-minimal">
-              <span>S01</span>
-              <strong>少一点干扰</strong>
-              <small>冷静极简</small>
-            </div>
-            <div class="cabinet-sample sample-cold">
-              <span>S04</span>
-              <strong>精密，不喧哗</strong>
-              <small>冷感奢华</small>
-            </div>
-          </div>
-          <div class="home-panel-copy">
-            <div>
-              <h2>从画面找到风格</h2>
-              <p>比较配色、字体、布局与材质，复制完整表达。</p>
-            </div>
-            <a class="home-panel-link" href="styles.html">浏览 22 种风格 <span aria-hidden="true">&#8599;</span></a>
-          </div>
-        </article>
-
-        <article class="home-panel" id="motionPanel" role="tabpanel" aria-labelledby="motionTab" hidden>
-          <div class="home-preview motion-cabinet" aria-label="淡入上移、交错入场和磁吸反馈的动效预览">
-            <div class="motion-demo motion-fade-demo" role="group" tabindex="0" aria-label="悬浮体验淡入上移动效">
-              <span>M01</span>
-              <i aria-hidden="true"></i>
-              <small>淡入上移</small>
-            </div>
-            <div class="motion-demo motion-stagger-demo" role="group" tabindex="0" aria-label="悬浮体验交错入场动效">
-              <span>M02</span>
-              <div aria-hidden="true"><i></i><i></i><i></i></div>
-              <small>交错入场</small>
-            </div>
-            <div class="motion-demo motion-magnetic-demo" role="group" tabindex="0" aria-label="悬浮体验磁吸反馈动效">
-              <span>M04</span>
-              <i aria-hidden="true">靠近</i>
-              <small>磁吸反馈</small>
-            </div>
-          </div>
-          <div class="home-panel-copy">
-            <div>
-              <h2>现场感受运动节奏</h2>
-              <p>触发、重播并比较反馈方式，复制可执行的动效描述。</p>
-            </div>
-            <a class="home-panel-link" href="motion.html">浏览 40 种动效 <span aria-hidden="true">&#8599;</span></a>
-          </div>
-        </article>
-      </div>
+      <a class="home-entry-card home-entry-motion" href="motion.html">
+        <div class="home-entry-visual" aria-hidden="true">
+          <span></span>
+          <i></i>
+        </div>
+        <div class="home-entry-body">
+          <span>40 个动效模式</span>
+          <h2>交互动效</h2>
+          <p>复制用途、触发方式、节奏与降级要求。</p>
+        </div>
+        <b aria-hidden="true">↗</b>
+      </a>
     </section>
   </main>
-
-  <footer class="site-footer home-footer">
-    <span>基于 design-taste-frontend 构建</span>
-    <span>无需登录，不收集数据</span>
-  </footer>
-  <script src="home.js"></script>
 </body>
 </html>
