@@ -338,17 +338,14 @@ let activeDemoStyle = null;
 
 const sharedStyleDemo = {
   brand: "AI产品工作台",
-  nav: "工作台 / 项目 / 报告",
+  nav: "工作台 / 项目",
   kicker: "PROJECT OS",
-  title: "把设计请求变成可执行方案",
-  copy: "统一收集需求、自动拆解任务、沉淀可复用的项目知识。",
-  cta: "生成方案",
+  title: "把请求变成方案",
+  copy: "统一工作台，快速进入执行。",
   stats: [
     ["47", "进行中"],
-    ["12h", "节省时间"],
-    ["8.6", "满意度"]
-  ],
-  tasks: ["需求澄清", "页面草图", "交付清单"]
+    ["12h", "节省时间"]
+  ]
 };
 
 function stylePrompt(style) {
@@ -367,11 +364,8 @@ Design Read：先根据我的产品类型、目标用户与核心动作确认这
 }
 
 function styleDemoMarkup(style, mode = "card") {
-  const statItems = (mode === "full" ? sharedStyleDemo.stats : sharedStyleDemo.stats.slice(0, 2))
+  const statItems = sharedStyleDemo.stats
     .map(([value, label]) => `<span><strong>${value}</strong><em>${label}</em></span>`)
-    .join("");
-  const taskItems = (mode === "full" ? sharedStyleDemo.tasks : sharedStyleDemo.tasks.slice(0, 2))
-    .map((task) => `<li>${task}</li>`)
     .join("");
 
   return `
@@ -384,8 +378,6 @@ function styleDemoMarkup(style, mode = "card") {
       <div class="sample-title">${sharedStyleDemo.title}</div>
       <div class="sample-copy">${sharedStyleDemo.copy}</div>
       <div class="demo-stat-row" aria-label="统一 demo 指标">${statItems}</div>
-      <ul class="demo-task-list" aria-label="统一 demo 任务">${taskItems}</ul>
-      <span class="sample-cta">${sharedStyleDemo.cta}</span>
     </div>`;
 }
 
