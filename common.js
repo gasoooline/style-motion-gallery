@@ -78,6 +78,38 @@
     toastTimer = window.setTimeout(() => toast.classList.remove("show"), 1800);
   }
 
+  function playCopyBurst(button) {
+    if (!button || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const rect = button.getBoundingClientRect();
+    const compact = window.matchMedia("(max-width: 620px)").matches;
+    const count = compact ? 8 : 12;
+    const distance = compact ? 34 : 48;
+    const burst = document.createElement("span");
+    burst.className = "copy-particle-burst";
+    burst.setAttribute("aria-hidden", "true");
+    burst.style.left = `${rect.left + rect.width / 2}px`;
+    burst.style.top = `${rect.top + rect.height / 2}px`;
+
+    Array.from({ length: count }).forEach((_, index) => {
+      const angle = (Math.PI * 2 * index) / count - Math.PI / 2;
+      const edgeX = Math.cos(angle) * (rect.width / 2);
+      const edgeY = Math.sin(angle) * (rect.height / 2);
+      const travel = distance + (index % 3) * 9;
+      const particle = document.createElement("span");
+      particle.style.setProperty("--start-x", `${edgeX}px`);
+      particle.style.setProperty("--start-y", `${edgeY}px`);
+      particle.style.setProperty("--end-x", `${edgeX + Math.cos(angle) * travel}px`);
+      particle.style.setProperty("--end-y", `${edgeY + Math.sin(angle) * travel}px`);
+      particle.style.setProperty("--size", `${compact ? 4 : 5 + (index % 2)}px`);
+      particle.style.setProperty("--delay", `${index * 12}ms`);
+      particle.style.setProperty("--hue", `${132 + index * 11}`);
+      burst.appendChild(particle);
+    });
+
+    document.body.appendChild(burst);
+    window.setTimeout(() => burst.remove(), 760);
+  }
+
   function createFilters(container, labels, onChange) {
     let active = "全部";
     labels.forEach((label) => {
@@ -109,6 +141,7 @@
     document.documentElement.dataset.lastCopied = label;
     button.classList.add("copied");
     button.textContent = manual ? "已选中" : "已复制";
+    playCopyBurst(button);
     showToast(manual ? `${label} Prompt 已选中，请按 ⌘C 复制` : `${label} Prompt 已复制`);
     window.setTimeout(() => {
       button.classList.remove("copied");

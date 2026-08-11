@@ -867,6 +867,45 @@ input:focus-visible {
   background: var(--success);
 }
 
+.copy-particle-burst {
+  position: fixed;
+  z-index: 90;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.copy-particle-burst span {
+  position: absolute;
+  left: calc(var(--size) / -2);
+  top: calc(var(--size) / -2);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 999px;
+  background: hsl(var(--hue) 48% 54%);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.26);
+  transform: translate(var(--start-x), var(--start-y)) scale(0.72);
+  opacity: 0;
+  animation: copy-particle-burst 620ms ease-out var(--delay) forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes copy-particle-burst {
+  0% {
+    transform: translate(var(--start-x), var(--start-y)) scale(0.72);
+    opacity: 0;
+  }
+
+  18% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(var(--end-x), var(--end-y)) scale(0);
+    opacity: 0;
+  }
+}
+
 .copy-toast {
   position: fixed;
   right: 24px;
@@ -1802,6 +1841,8 @@ input:focus-visible {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }
+
+  .copy-particle-burst { display: none; }
 }
 
 @media (prefers-reduced-transparency: reduce) {
