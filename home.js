@@ -1,30 +1,30 @@
 (function () {
-  const tabs = Array.from(document.querySelectorAll(".home-tab"));
-  const panels = tabs.map((tab) => document.getElementById(tab.getAttribute("aria-controls")));
+  const stage = document.getElementById("homeGalleryFrame");
+  const links = Array.from(document.querySelectorAll(".home-rail-link"));
+  const panels = Array.from(document.querySelectorAll("[data-home-preview-panel]"));
+  if (!stage || !links.length || !panels.length) return;
 
-  function selectTab(nextTab) {
-    tabs.forEach((tab, index) => {
-      const selected = tab === nextTab;
-      tab.classList.toggle("active", selected);
-      tab.setAttribute("aria-selected", selected ? "true" : "false");
-      tab.tabIndex = selected ? 0 : -1;
-      panels[index].hidden = !selected;
-      panels[index].classList.toggle("active", selected);
+  function setState(nextState) {
+    stage.dataset.homeState = nextState;
+    links.forEach((link) => {
+      const active = link.dataset.homePreview === nextState;
+      link.classList.toggle("active", active);
+      if (active) link.setAttribute("aria-current", "page");
+      else link.removeAttribute("aria-current");
     });
+    panels.forEach((panel) => panel.classList.toggle("is-active", panel.dataset.homePreviewPanel === nextState));
   }
 
-  tabs.forEach((tab, index) => {
-    tab.addEventListener("click", () => selectTab(tab));
-    tab.addEventListener("keydown", (event) => {
-      let nextIndex = index;
-      if (event.key === "ArrowRight") nextIndex = (index + 1) % tabs.length;
-      if (event.key === "ArrowLeft") nextIndex = (index - 1 + tabs.length) % tabs.length;
-      if (event.key === "Home") nextIndex = 0;
-      if (event.key === "End") nextIndex = tabs.length - 1;
-      if (nextIndex === index) return;
-      event.preventDefault();
-      selectTab(tabs[nextIndex]);
-      tabs[nextIndex].focus();
-    });
+  links.forEach((link) => {
+    const nextState = link.dataset.homePreview;
+    link.addEventListener("pointerenter", () => setState(nextState));
+    link.addEventListener("focus", () => setState(nextState));
   });
+
+  stage.addEventListener("pointerleave", () => setState("styles"));
+  stage.addEventListener("focusout", (event) => {
+    if (!stage.contains(event.relatedTarget)) setState("styles");
+  });
+
+  setState(stage.dataset.homeState || "styles");
 })();
