@@ -1057,48 +1057,49 @@ input:focus-visible {
   margin-bottom: 12px;
 }
 
-.style-demo-preview .sample-body {
-  gap: 6px;
+.style-demo-preview .sample-body,
+.style-demo-full .sample-body {
+  gap: 7px;
 }
 
-.style-demo-preview .sample-title {
+.style-demo-preview .sample-title,
+.style-demo-full .sample-title {
   max-width: 10ch;
-  font-size: clamp(21px, 2.4vw, 32px);
+  font-size: clamp(22px, 2.4vw, 32px);
+  line-height: 1.02;
   text-wrap: balance;
 }
 
-.style-demo-preview .demo-stat-row {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.style-demo-preview .demo-stat-row span {
-  padding: 7px 8px;
-}
-
-.style-demo-preview .sample-copy {
-  max-width: 16ch;
+.style-demo-preview .sample-copy,
+.style-demo-full .sample-copy {
+  max-width: 18ch;
   font-size: 10px;
-  line-height: 1.4;
+  line-height: 1.45;
+}
+
+.style-demo-preview .demo-stat-row,
+.style-demo-full .demo-stat-row {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.style-demo-preview .demo-stat-row span,
+.style-demo-full .demo-stat-row span {
+  padding: 6px 7px;
+}
+
+.style-demo-preview .demo-stat-row strong,
+.style-demo-full .demo-stat-row strong {
+  font-size: 13px;
+}
+
+.style-demo-preview .demo-stat-row em,
+.style-demo-full .demo-stat-row em {
+  font-size: 9px;
 }
 
 .style-demo-full {
   min-height: 460px;
-}
-
-.style-demo-full .sample-body {
-  gap: 10px;
-}
-
-.style-demo-full .sample-title {
-  max-width: 8ch;
-  font-size: clamp(40px, 5vw, 72px);
-  text-wrap: balance;
-}
-
-.style-demo-full .sample-copy {
-  max-width: 22ch;
-  font-size: 12px;
-  line-height: 1.5;
 }
 
 .demo-stat-row {
@@ -1444,20 +1445,6 @@ input:focus-visible {
   padding-inline: 11px;
   font-size: 9px;
 }
-
-.specimen-preview.style-demo-preview .demo-stat-row {
-  gap: 6px;
-}
-
-.specimen-preview.style-demo-preview .demo-stat-row span {
-  padding: 6px 7px;
-}
-
-.specimen-preview.style-demo-preview .demo-stat-row strong {
-  font-size: 13px;
-}
-
-.specimen-preview.style-demo-preview .demo-stat-row em { font-size: 9px; }
 
 /* Motion specimens */
 .motion-grid .specimen-preview {
