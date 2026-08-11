@@ -28,33 +28,67 @@
       </div>
     </section>
 
-    <section class="home-entry-grid" aria-label="进入参考库">
-      <a class="home-entry-card home-entry-style" href="styles.html">
-        <div class="home-entry-visual" aria-hidden="true">
-          <span></span>
-          <i></i>
-        </div>
-        <div class="home-entry-body">
-          <span>22 种视觉方向</span>
-          <h2>网页风格</h2>
-          <p>复制配色、字体、布局与材质的设计语言。</p>
-        </div>
-        <b aria-hidden="true">↗</b>
-      </a>
+    <section class="home-stage" aria-label="进入参考库">
+      <div class="home-rail" role="navigation" aria-label="参考库导航">
+        <a class="home-rail-link active" href="styles.html" data-home-preview="styles">
+          <span>网页风格</span>
+          <small>22</small>
+        </a>
+        <a class="home-rail-link" href="motion.html" data-home-preview="motion">
+          <span>交互动效</span>
+          <small>40</small>
+        </a>
+      </div>
 
-      <a class="home-entry-card home-entry-motion" href="motion.html">
-        <div class="home-entry-visual" aria-hidden="true">
-          <span></span>
-          <i></i>
-        </div>
-        <div class="home-entry-body">
-          <span>40 个动效模式</span>
-          <h2>交互动效</h2>
-          <p>复制用途、触发方式、节奏与降级要求。</p>
-        </div>
-        <b aria-hidden="true">↗</b>
-      </a>
+      <div class="home-gallery-frame" id="homeGalleryFrame" data-home-state="styles">
+        <article class="home-gallery-panel home-gallery-styles is-active" data-home-preview-panel="styles" aria-label="网页风格预览">
+          <div class="home-gallery-stack">
+            <div class="home-gallery-sheet home-gallery-sheet-back"></div>
+            <div class="home-gallery-sheet home-gallery-sheet-middle"></div>
+            <div class="home-gallery-sheet home-gallery-sheet-front">
+              <div class="home-gallery-kicker">AI 产品工作台</div>
+              <div class="home-gallery-hero">
+                <span>PROJECT OS</span>
+                <strong>把请求变成方案</strong>
+                <p>统一工作台，快速进入执行。</p>
+              </div>
+              <div class="home-gallery-blocks">
+                <i></i><i></i><i></i>
+              </div>
+            </div>
+          </div>
+          <div class="home-gallery-caption">
+            <span>网页风格</span>
+            <p>复制配色、字体、布局与材质的设计语言。</p>
+          </div>
+        </article>
+
+        <article class="home-gallery-panel home-gallery-motion" data-home-preview-panel="motion" aria-label="交互动效预览">
+          <div class="home-gallery-stack">
+            <div class="home-gallery-sheet home-gallery-sheet-back"></div>
+            <div class="home-gallery-sheet home-gallery-sheet-middle"></div>
+            <div class="home-gallery-sheet home-gallery-sheet-front">
+              <div class="home-gallery-kicker">MOTION LIBRARY</div>
+              <div class="home-gallery-motion-track">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="home-gallery-hero">
+                <span>反馈 / 状态 / 滚动</span>
+                <strong>看懂运动的感觉</strong>
+                <p>复制用途、触发方式、节奏与降级要求。</p>
+              </div>
+            </div>
+          </div>
+          <div class="home-gallery-caption">
+            <span>交互动效</span>
+            <p>复制用途、触发方式、节奏与降级要求。</p>
+          </div>
+        </article>
+      </div>
     </section>
   </main>
+  <script src="home.js"></script>
 </body>
 </html>
