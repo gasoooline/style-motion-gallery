@@ -520,6 +520,24 @@ function resetMotion(card) {
   if (counter) counter.textContent = "0";
 }
 
+function startHoverLoop(card) {
+  window.clearInterval(card._hoverLoopTimer);
+  replayMotion(card);
+  card._hoverLoopTimer = window.setInterval(() => {
+    if (!card.matches(":hover") && !card.contains(document.activeElement)) {
+      window.clearInterval(card._hoverLoopTimer);
+      card._hoverLoopTimer = null;
+      return;
+    }
+    replayMotion(card);
+  }, 1900);
+}
+
+function stopHoverLoop(card) {
+  window.clearInterval(card._hoverLoopTimer);
+  card._hoverLoopTimer = null;
+}
+
 function wireInteractiveDemo(card, motion) {
   const stage = card.querySelector(".motion-stage");
   if (motion.id === "M06") {
@@ -563,8 +581,6 @@ function motionCard(motion) {
   article.dataset.category = motion.category;
   article.dataset.motionId = motion.id;
   article.dataset.search = TasteGallery.normalize(`${motion.id}${motion.name}${motion.category}${motion.summary}${motion.tags}`);
-  const replayLabel = motion.mode === "hover" ? "悬浮体验" : motion.mode === "click" ? "点击体验" : motion.mode === "loop" ? "循环播放" : "重播";
-  const canReplay = motion.mode === "replay";
   article.innerHTML = `
     <div class="specimen-preview motion-stage">${motionStage(motion.id)}</div>
     <div class="specimen-info">
@@ -574,21 +590,20 @@ function motionCard(motion) {
         <p>${motion.summary}</p>
       </div>
       <div class="card-actions">
-        ${canReplay ? '<button class="replay-button" type="button">重播</button>' : `<button class="replay-button" type="button" disabled aria-disabled="true">${replayLabel}</button>`}
         <button class="copy-button" type="button">复制 Prompt</button>
       </div>
     </div>`;
 
-  const replay = article.querySelector(".replay-button");
-  if (canReplay) replay.addEventListener("click", () => replayMotion(article));
-  article.addEventListener("pointerenter", () => replayMotion(article));
+  article.addEventListener("pointerenter", () => startHoverLoop(article));
   article.addEventListener("pointerleave", () => {
+    stopHoverLoop(article);
     if (!article.contains(document.activeElement)) resetMotion(article);
   });
   article.addEventListener("focusin", (event) => {
-    if (!article.contains(event.relatedTarget)) replayMotion(article);
+    if (!article.contains(event.relatedTarget)) startHoverLoop(article);
   });
   article.addEventListener("focusout", (event) => {
+    stopHoverLoop(article);
     if (!article.contains(event.relatedTarget)) resetMotion(article);
   });
   article.querySelector(".copy-button").addEventListener("click", async (event) => {
